@@ -1,5 +1,13 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged, User, signOut } from 'firebase/auth';
+import {
+    getFirestore,
+    collection,
+    CollectionReference,
+    DocumentData,
+    doc,
+    DocumentReference,
+} from 'firebase/firestore';
 
 const app = initializeApp({
     apiKey: 'AIzaSyAQZqkNhUAxluOgbqNZb5QaIhsrZ35uwdA',
@@ -11,6 +19,7 @@ const app = initializeApp({
 });
 
 const auth = getAuth(app);
+const firestore = getFirestore(app);
 
 const authProvider = new GoogleAuthProvider();
 
@@ -26,4 +35,12 @@ export type OnAuthChangeHandler = (user: User | null) => void;
 
 export function registerAuthListener(onChange: OnAuthChangeHandler) {
     onAuthStateChanged(auth, onChange);
+}
+
+export function createDocReference<DocumentType extends DocumentData>(collection: string, uuid: string) {
+    return doc(firestore, collection, uuid) as DocumentReference<DocumentType>;
+}
+
+export function getDatabaseCollection<DocumentType extends DocumentData>(name: string) {
+    return collection(firestore, name) as CollectionReference<DocumentType>;
 }

@@ -2,11 +2,15 @@ import { useCallback } from 'react';
 import produce from 'immer';
 import { TodoCollection } from '../../../model/todo';
 import { PersistTodoHandler } from './useManageTodosState';
+import { persistTodo } from '../../../firebase/repository/todoRepository';
+import { useLoggedInUser } from '../../../auth/AuthContext';
 
 export default function usePersistNewTodo(
     todos: TodoCollection | null,
     setTodos: (todos: TodoCollection | null) => void,
 ): PersistTodoHandler {
+    const user = useLoggedInUser();
+
     return useCallback<PersistTodoHandler>(
         async (newTodo, index) => {
             const newTodos = produce<TodoCollection | null>(todos, (newTodos) => {
@@ -17,10 +21,13 @@ export default function usePersistNewTodo(
                 newTodos.splice(index, 0, newTodo);
             });
 
+            // update in-memory state
             setTodos(newTodos);
 
-            // @todo persist todo to backend
+            // update server state
+            // @todo remove todo again when an error occurs + notify user
+            await persistTodo(newTodo, user);
         },
-        [setTodos, todos],
+        [setTodos, todos, user],
     );
 }

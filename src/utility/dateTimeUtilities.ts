@@ -1,4 +1,4 @@
-import { format, isSameYear, isToday, isTomorrow, parse, startOfDay, startOfTomorrow } from 'date-fns';
+import { format, isSameYear, isToday, isTomorrow, parse, parseISO, startOfDay, startOfTomorrow } from 'date-fns';
 import nl from 'date-fns/locale/nl';
 
 export function resolveDateForIndicator(indicator: string): Date | null {
@@ -43,6 +43,7 @@ function createStartOfToday(): Date {
 function createStartOfDay(date: Date): Date {
     return startOfDay(date);
 }
+
 export function formatRelativeDate(date: Date): string {
     if (isToday(date)) {
         return 'today';
@@ -59,4 +60,8 @@ export function formatRelativeDate(date: Date): string {
     }
 
     return format(date, 'd LLL yyyy');
+}
+
+export function parseISOString(value: string): Date {
+    return parseISO(value);
 }

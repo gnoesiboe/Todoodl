@@ -11,6 +11,7 @@ export type Todo = {
     tags: string[];
     priority: TodoPriority;
     start: Date | null;
+    rank: number;
 };
 
 export type TodoCollection = Todo[];

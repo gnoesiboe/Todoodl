@@ -12,6 +12,7 @@ export function createInitialTodo(): Todo {
         rawValue: '',
         priority: 'should',
         start: null,
+        rank: 0,
     };
 }
 
@@ -25,6 +26,7 @@ export function createTodoFromRawValue(rawValue: string): Todo {
         rawValue,
         priority: 'should',
         start: null,
+        rank: 0,
         ...generateTodoUpdatesFromRawValue(rawValue),
     };
 }

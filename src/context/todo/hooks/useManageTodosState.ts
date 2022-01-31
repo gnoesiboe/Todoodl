@@ -1,6 +1,6 @@
 import { Todo, TodoCollection } from '../../../model/todo';
 import { useCallback, useEffect } from 'react';
-import { getAllTodos } from '../../../repository/todoRepository';
+import { fetchAllTodos } from '../../../firebase/repository/todoRepository';
 import useAsyncAction from '../../../hooks/useAsyncAction';
 import produce from 'immer';
 import { writeTodosToStorage } from '../../../storage/todoStorage';
@@ -8,6 +8,7 @@ import usePersistNewTodo from './usePersistNewTodo';
 import useUpdateExistingTodo from './useUpdateExistingTodo';
 import useRemoveTodo from './useRemoveTodo';
 import useMoveTodo from './useMoveTodo';
+import { useLoggedInUser } from '../../../auth/AuthContext';
 
 export type GetAllTodosHandler = () => Promise<void>;
 export type PersistTodoHandler = (newTodo: Todo, index: number) => Promise<void>;
@@ -32,13 +33,19 @@ type TodoMutators = {
 export type Output = TodosState & TodoMutators;
 
 export default function useManageTodosState(): Output {
+    const user = useLoggedInUser();
+
+    const fetchAllUsersTodos = useCallback(() => {
+        return fetchAllTodos(user);
+    }, [user]);
+
     const {
         execute: getAll,
         loading,
         error,
         result: todos,
         overrideResult: setTodos,
-    } = useAsyncAction<TodoCollection | null>(getAllTodos);
+    } = useAsyncAction<TodoCollection | null>(fetchAllUsersTodos);
 
     useEffect(() => {
         getAll();
