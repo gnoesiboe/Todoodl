@@ -1,9 +1,8 @@
-import React, { useCallback, useState, VFC, ReactNode, useRef } from 'react';
+import React, { useCallback, useState, VFC, ReactNode } from 'react';
 import { Todo } from '../../../../../model/todo';
 import EditTodo from '../editTodo/EditTodo';
 import Description from './components/Description';
 import Checkbox from './components/Checkbox';
-import { update } from '../../../../../repository/todoRepository';
 import createClassName from 'classnames';
 import useStartEditWithKeyboardShortcut from './hooks/useStartEditWithKeyboardShortcut';
 import useToggleToggleDoneWithKeyboardShortcut from './hooks/useToggleToggleDoneWithKeyboardShortcut';
@@ -12,6 +11,7 @@ import ActionButton from './components/ActionButton';
 import useHandleActionListClickEvents from './hooks/useHandleActionListClickEvents';
 import useScrollIntoView from '../../../../../utility/useScrollIntoView';
 import StartDate from './components/StartDate';
+import { useManageTodos } from '../../../../../context/todo/TodoContext';
 
 type Props = {
     todo: Todo;
@@ -28,9 +28,11 @@ export enum Mode {
 const ViewTodo: VFC<Props> = ({ todo, current, renderAfter, renderBefore }) => {
     const [mode, setMode] = useState<Mode>(Mode.View);
 
+    const { update } = useManageTodos();
+
     const toggleDone = useCallback(() => {
         update(todo.uuid, { done: !todo.done });
-    }, [todo.done, todo.uuid]);
+    }, [todo.done, todo.uuid, update]);
 
     useStartEditWithKeyboardShortcut(current, mode, setMode);
     useToggleToggleDoneWithKeyboardShortcut(current, mode, toggleDone);

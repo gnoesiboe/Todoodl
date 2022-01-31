@@ -4,7 +4,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import useHandleEditTodoKeyboardShortcuts from './hooks/useHandleEditTodoKeyboardShortcuts';
 import Button from '../../../../../primitives/button/Button';
 import { generateTodoUpdatesFromRawValue } from '../../../../../handler/todoUpdateHandler';
-import { update } from '../../../../../repository/todoRepository';
+import { useManageTodos } from '../../../../../context/todo/TodoContext';
 
 type Props = {
     todo: Todo;
@@ -13,6 +13,8 @@ type Props = {
 
 const EditTodo: VFC<Props> = ({ todo, onDone }) => {
     const [rawValue, setRawValue] = useState<string>(todo.rawValue);
+
+    const { update } = useManageTodos();
 
     const persistUpdates = () => {
         update(todo.uuid, generateTodoUpdatesFromRawValue(rawValue));

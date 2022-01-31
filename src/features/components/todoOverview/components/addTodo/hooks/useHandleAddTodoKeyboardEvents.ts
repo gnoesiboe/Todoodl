@@ -2,10 +2,10 @@ import useToggleVisibility from '../../../../../../hooks/useToggleVisibility';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { checkIsFormInputElement } from '../../../../../../utility/formUtilities';
 import { checkIsKeyboardShortcut } from '../../../../../../utility/keyboardUtilities';
-import { persist } from '../../../../../../repository/todoRepository';
 import { createTodoFromRawValue } from '../../../../../../model/factory/todoFactory';
 import { TodoPriority } from '../../../../../../model/todo';
 import { LocationType } from '../AddTodo';
+import { useManageTodos } from '../../../../../../context/todo/TodoContext';
 
 export default function useHandleAddTodoKeyboardEvents(
     atIndex: number,
@@ -14,6 +14,8 @@ export default function useHandleAddTodoKeyboardEvents(
     priority: TodoPriority,
     location: LocationType,
 ) {
+    const { persist } = useManageTodos();
+
     const { visible, show, hide } = useToggleVisibility(false);
 
     useEffect(() => {

@@ -3,12 +3,14 @@ import { checkIsKeyboardShortcut } from '../../../../utility/keyboardUtilities';
 import { checkIsFormInputElement } from '../../../../utility/formUtilities';
 import { TodoCollection } from '../../../../model/todo';
 import { resolveNextIndexToMoveTodoTo, resolvePreviousIndexToMoveTodoTo } from '../utility/todoResolver';
-import { move } from '../../../../repository/todoRepository';
+import { useManageTodos } from '../../../../context/todo/TodoContext';
 
 export default function useMoveTodoWithKeyboardShortcut(
     currentTodoUUid: string | null,
     flatTodoCollection: TodoCollection,
 ) {
+    const { move } = useManageTodos();
+
     useEffect(() => {
         if (!currentTodoUUid) {
             return;

@@ -1,15 +1,17 @@
 import { Dispatch, MouseEventHandler, SetStateAction } from 'react';
 import { Mode } from '../ViewTodo';
 import { Todo, TodoPriority } from '../../../../../../model/todo';
-import { remove, update } from '../../../../../../repository/todoRepository';
-
-const updatePriority = (todo: Todo, newPriority: TodoPriority) => {
-    update(todo.uuid, {
-        priority: newPriority,
-    });
-};
+import { useManageTodos } from '../../../../../../context/todo/TodoContext';
 
 export default function useHandleActionListClickEvents(todo: Todo, setMode: Dispatch<SetStateAction<Mode>>) {
+    const { remove, update } = useManageTodos();
+
+    const updatePriority = (todo: Todo, newPriority: TodoPriority) => {
+        update(todo.uuid, {
+            priority: newPriority,
+        });
+    };
+
     const onEditClick: MouseEventHandler<HTMLButtonElement> = () => setMode(Mode.Edit);
 
     const onMustClick: MouseEventHandler<HTMLButtonElement> = () => updatePriority(todo, 'must');

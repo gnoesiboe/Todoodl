@@ -1,10 +1,10 @@
 import { MouseEventHandler } from 'react';
 import { Todo } from '../../../../../../model/todo';
-import { remove } from '../../../../../../repository/todoRepository';
+import { useManageTodos } from '../../../../../../context/todo/TodoContext';
 
-export default function useDeleteTodoOnConfirm(
-    todo: Todo,
-): MouseEventHandler<HTMLButtonElement> {
+export default function useDeleteTodoOnConfirm(todo: Todo): MouseEventHandler<HTMLButtonElement> {
+    const { remove } = useManageTodos();
+
     return () => {
         remove(todo);
     };

@@ -4,7 +4,7 @@ import useHandleAddTodoKeyboardEvents from './hooks/useHandleAddTodoKeyboardEven
 import { TodoPriority } from '../../../../../model/todo';
 import Button from '../../../../../primitives/button/Button';
 import { createTodoFromRawValue } from '../../../../../model/factory/todoFactory';
-import { persist } from '../../../../../repository/todoRepository';
+import { useManageTodos } from '../../../../../context/todo/TodoContext';
 
 export type LocationType = 'before' | 'after';
 
@@ -16,6 +16,8 @@ type Props = {
 
 const AddTodo: VFC<Props> = ({ atIndex, priority, location }) => {
     const [rawValue, setRawValue] = useState<string>('');
+
+    const { persist } = useManageTodos();
 
     const { visible, hide } = useHandleAddTodoKeyboardEvents(atIndex, rawValue, setRawValue, priority, location);
 
