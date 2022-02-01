@@ -4,7 +4,7 @@ export const allPriorities: Array<TodoPriority> = ['must', 'should', 'could', 'w
 
 export type Todo = {
     uuid: string;
-    done: boolean;
+    doneAt: Date | null;
     description: string;
     rawValue: string;
     project: string | null;

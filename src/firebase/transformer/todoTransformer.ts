@@ -10,7 +10,7 @@ export function transformDocumentSnapshotToModel(documentSnapshot: QueryDocument
 
     return {
         uuid: documentSnapshot.id,
-        done: data.done,
+        doneAt: data.doneAt ? parseISOString(data.doneAt) : null,
         description: data.description,
         rawValue: data.rawValue,
         project: data.project || null,
@@ -24,7 +24,7 @@ export function transformDocumentSnapshotToModel(documentSnapshot: QueryDocument
 export function transformModelToDocument(todo: Todo, user: User): TodoDocument {
     const doc: TodoDocument = {
         userUid: user.uid,
-        done: todo.done,
+        doneAt: todo.doneAt ? todo.doneAt.toISOString() : undefined,
         description: todo.description,
         rawValue: todo.rawValue,
         project: todo.project || undefined,

@@ -2,7 +2,7 @@ import { DocumentData } from 'firebase/auth';
 
 export interface TodoDocument extends DocumentData {
     userUid: string;
-    done: boolean;
+    doneAt?: string;
     description: string;
     rawValue: string;
     project?: string;

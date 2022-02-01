@@ -10,8 +10,7 @@ type Props = {
 
 const Summary: VFC<Props> = ({ todo, html, onDoubleClick }) => {
     const className = createClassName({
-        'line-through': todo.done,
-        'opacity-30': todo.done,
+        'line-through opacity-30': !!todo.doneAt,
     });
 
     return <div className={className} onDoubleClick={onDoubleClick} dangerouslySetInnerHTML={{ __html: html }} />;

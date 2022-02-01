@@ -31,8 +31,10 @@ const ViewTodo: VFC<Props> = ({ todo, current, renderAfter, renderBefore }) => {
     const { update } = useManageTodos();
 
     const toggleDone = useCallback(() => {
-        update(todo.uuid, { done: !todo.done });
-    }, [todo.done, todo.uuid, update]);
+        update(todo.uuid, {
+            doneAt: todo.doneAt instanceof Date ? null : new Date(),
+        });
+    }, [todo.doneAt, todo.uuid, update]);
 
     useStartEditWithKeyboardShortcut(current, mode, setMode);
     useToggleToggleDoneWithKeyboardShortcut(current, mode, toggleDone);

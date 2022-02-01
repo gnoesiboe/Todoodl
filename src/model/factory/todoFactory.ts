@@ -5,7 +5,7 @@ import { generateTodoUpdatesFromRawValue } from '../../handler/todoUpdateHandler
 export function createInitialTodo(): Todo {
     return {
         uuid: generateUuid(),
-        done: false,
+        doneAt: null,
         description: '',
         tags: [],
         project: null,
@@ -19,7 +19,7 @@ export function createInitialTodo(): Todo {
 export function createTodoFromRawValue(rawValue: string): Todo {
     return {
         uuid: generateUuid(),
-        done: false,
+        doneAt: null,
         description: rawValue,
         tags: [],
         project: null,
