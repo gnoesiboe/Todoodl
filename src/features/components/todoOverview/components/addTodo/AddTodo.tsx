@@ -12,14 +12,22 @@ type Props = {
     atIndex: number;
     priority: TodoPriority;
     location: LocationType;
+    initiallyVisible?: boolean;
 };
 
-const AddTodo: VFC<Props> = ({ atIndex, priority, location }) => {
+const AddTodo: VFC<Props> = ({ atIndex, priority, location, initiallyVisible = false }) => {
     const [rawValue, setRawValue] = useState<string>('');
 
     const { persist } = useManageTodos();
 
-    const { visible, hide } = useHandleAddTodoKeyboardEvents(atIndex, rawValue, setRawValue, priority, location);
+    const { visible, hide } = useHandleAddTodoKeyboardEvents(
+        atIndex,
+        rawValue,
+        setRawValue,
+        priority,
+        location,
+        initiallyVisible,
+    );
 
     if (!visible) {
         return null;

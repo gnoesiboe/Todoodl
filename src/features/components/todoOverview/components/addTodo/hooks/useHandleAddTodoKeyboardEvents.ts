@@ -13,10 +13,11 @@ export default function useHandleAddTodoKeyboardEvents(
     setRawValue: Dispatch<SetStateAction<string>>,
     priority: TodoPriority,
     location: LocationType,
+    initiallyVisible: boolean,
 ) {
     const { persist } = useManageTodos();
 
-    const { visible, show, hide } = useToggleVisibility(false);
+    const { visible, show, hide } = useToggleVisibility(initiallyVisible);
 
     useEffect(() => {
         const onKeyDown = (event: WindowEventMap['keydown']) => {

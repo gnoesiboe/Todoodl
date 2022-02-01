@@ -16,7 +16,7 @@ import useMoveTodoWithKeyboardShortcut from './hooks/useMoveTodoWithKeyboardShor
 import { useTodos } from '../../../context/todo/TodoContext';
 
 const TodoOverview: VFC = () => {
-    const { todos } = useTodos();
+    const { todos, loading } = useTodos();
 
     const { appliedFilters, togglePriority, toggleProject, toggleTag } = useHandleFilterState(todos || []);
 
@@ -36,7 +36,9 @@ const TodoOverview: VFC = () => {
                 </Heading>
             </div>
             <div className="p-4 space-y-8">
-                {todos ? (
+                {loading && <p>Loading..</p>}
+
+                {todos && todos.length > 0 ? (
                     <>
                         <TodoOverviewFiltering
                             todos={todos}
@@ -91,7 +93,7 @@ const TodoOverview: VFC = () => {
                         </PriorityList>
                     </>
                 ) : (
-                    <p>Loading..</p>
+                    <AddTodo atIndex={0} priority="must" location="after" initiallyVisible />
                 )}
             </div>
         </section>
