@@ -2,7 +2,6 @@ import { Todo, TodoCollection } from '../../../model/todo';
 import { useCallback, useEffect } from 'react';
 import { fetchAllTodos } from '../../../firebase/repository/todoRepository';
 import useAsyncAction from '../../../hooks/useAsyncAction';
-import produce from 'immer';
 import { writeTodosToStorage } from '../../../storage/todoStorage';
 import usePersistNewTodo from './usePersistNewTodo';
 import useUpdateExistingTodo from './useUpdateExistingTodo';

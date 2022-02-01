@@ -55,7 +55,7 @@ export function resolvePreviousIndexToMoveTodoTo(
 
     const todoToMove = flatTodoCollection[currentIndex];
 
-    for (let i = currentIndex - 1, l = 0; i >= 0; i--) {
+    for (let i = currentIndex - 1; i >= 0; i--) {
         const cursorTodo = flatTodoCollection[i];
 
         if (cursorTodo.priority === todoToMove.priority) {

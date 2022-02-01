@@ -37,5 +37,5 @@ export default function useMoveTodoWithKeyboardShortcut(
         window.addEventListener('keydown', onKeyDown);
 
         return () => window.removeEventListener('keydown', onKeyDown);
-    }, [currentTodoUUid, flatTodoCollection]);
+    }, [currentTodoUUid, flatTodoCollection, move]);
 }

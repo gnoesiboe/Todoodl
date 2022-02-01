@@ -54,7 +54,7 @@ export default function useHandleAddTodoKeyboardEvents(
         window.addEventListener('keydown', onKeyDown);
 
         return () => window.removeEventListener('keydown', onKeyDown);
-    }, [hide, atIndex, priority, rawValue, setRawValue, show, visible, location]);
+    }, [hide, atIndex, priority, rawValue, setRawValue, show, visible, location, persist]);
 
     return { visible, hide };
 }
