@@ -8,7 +8,20 @@ type Props = {
 };
 
 const Checkbox: VFC<Props> = ({ todo, onChange, className }) => {
-    return <input type="checkbox" className={className} checked={todo.done} onChange={onChange} />;
+    return (
+        <input
+            type="checkbox"
+            className={className}
+            checked={todo.doneAt instanceof Date}
+            onChange={(event) => {
+                onChange(event);
+
+                // make sure that checkbox does not stay focussed as this undermines the
+                // keyboard navigation
+                event.target.blur();
+            }}
+        />
+    );
 };
 
 export default Checkbox;
