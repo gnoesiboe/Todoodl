@@ -1,7 +1,7 @@
 import { Todo, TodoCollection } from '../../model/todo';
 import { User } from 'firebase/auth';
 import { createDocReference, getDatabaseCollection } from '../firebase';
-import { query as createQuery, where, getDocs, setDoc } from 'firebase/firestore';
+import { query as createQuery, where, getDocs, setDoc, deleteDoc } from 'firebase/firestore';
 import { TodoDocument } from '../model/todoDocument';
 import { transformDocumentSnapshotToModel, transformModelToDocument } from '../transformer/todoTransformer';
 
@@ -26,4 +26,10 @@ export async function persistTodo(todo: Todo, user: User): Promise<void> {
     const document = transformModelToDocument(todo, user);
 
     await setDoc(documentReference, document);
+}
+
+export async function deleteTodo(todo: Todo): Promise<void> {
+    const documentReference = createDocReference<TodoDocument>(collection.id, todo.uuid);
+
+    await deleteDoc(documentReference);
 }

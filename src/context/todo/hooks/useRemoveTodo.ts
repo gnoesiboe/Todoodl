@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import produce from 'immer';
 import { TodoCollection } from '../../../model/todo';
 import { RemoveTodoHandler } from './useManageTodosState';
+import { deleteTodo } from '../../../firebase/repository/todoRepository';
 
 export default function useRemoveTodo(
     todos: TodoCollection | null,
@@ -25,7 +26,7 @@ export default function useRemoveTodo(
 
             setTodos(newTodos);
 
-            // @todo push changes to backend
+            await deleteTodo(todo);
         },
         [setTodos, todos],
     );
