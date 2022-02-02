@@ -1,28 +1,39 @@
 import { useCallback } from 'react';
-import produce from 'immer';
-import { TodoCollection } from '../../../model/todo';
+import { Todo, TodoCollection } from '../../../model/todo';
 import { MoveTodoHandler } from './useManageTodosState';
+import { resolveRankForIndex } from '../utility/todoRankResolver';
+import { sortTodosByRank } from '../../../utility/todoSortingUtilities';
+import { persistTodo } from '../../../firebase/repository/todoRepository';
+import { useLoggedInUser } from '../../../auth/AuthContext';
 
 export default function useMoveTodo(
     todos: TodoCollection | null,
     setTodos: (todos: TodoCollection | null) => void,
 ): MoveTodoHandler {
+    const user = useLoggedInUser();
+
     return useCallback<MoveTodoHandler>(
         async (oldIndex, newIndex) => {
-            const newTodos = produce<TodoCollection | null>(todos, (newTodos) => {
-                if (newTodos === null) {
-                    throw new Error('Expecting there to be todos at this point');
-                }
+            if (!todos) {
+                throw new Error('Expecting todos to be available at this point');
+            }
 
-                const todo = newTodos.splice(oldIndex, 1)[0];
+            const newTodos = [...todos];
+            const todo = newTodos.splice(oldIndex, 1)[0];
 
-                newTodos.splice(newIndex, 0, todo);
-            });
+            const newRank = resolveRankForIndex(newTodos, newIndex);
 
-            setTodos(newTodos);
+            const rankedTodo: Todo = {
+                ...todo,
+                rank: newRank,
+            };
 
-            // @todo push changes to backend
+            // in-memory update
+            setTodos(sortTodosByRank([...newTodos, rankedTodo]));
+
+            // persist to server
+            await persistTodo(rankedTodo, user);
         },
-        [setTodos, todos],
+        [setTodos, todos, user],
     );
 }

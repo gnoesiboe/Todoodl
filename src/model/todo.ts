@@ -11,7 +11,7 @@ export type Todo = {
     tags: string[];
     priority: TodoPriority;
     start: Date | null;
-    rank: number;
+    rank: number; // @todo when adding a new item, use half between before and after!
 };
 
 export type TodoCollection = Todo[];

@@ -43,6 +43,8 @@ export default function useHandleAddTodoKeyboardEvents(
 
             if (visible && checkIsKeyboardShortcut(event, 'Enter', { ctrlKey: true })) {
                 const todo = createTodoFromRawValue(rawValue);
+
+                // @todo this overrides any priority set in the raw value, fix this!
                 todo.priority = priority;
 
                 persist(todo, atIndex + (location === 'after' ? 1 : 0));

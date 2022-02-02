@@ -4,6 +4,7 @@ import { createDocReference, getDatabaseCollection } from '../firebase';
 import { query as createQuery, where, getDocs, setDoc, deleteDoc } from 'firebase/firestore';
 import { TodoDocument } from '../model/todoDocument';
 import { transformDocumentSnapshotToModel, transformModelToDocument } from '../transformer/todoTransformer';
+import { sortTodosByRank } from '../../utility/todoSortingUtilities';
 
 const collection = getDatabaseCollection<TodoDocument>('todos');
 
@@ -17,7 +18,7 @@ export async function fetchAllTodos(user: User): Promise<TodoCollection> {
         todos.push(transformDocumentSnapshotToModel(documentSnapshot));
     });
 
-    return todos;
+    return sortTodosByRank(todos);
 }
 
 export async function persistTodo(todo: Todo, user: User): Promise<void> {

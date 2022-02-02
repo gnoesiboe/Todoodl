@@ -22,12 +22,18 @@ export default function useMoveTodoWithKeyboardShortcut(
             }
 
             if (checkIsKeyboardShortcut(event, 'ArrowDown', { shiftKey: true })) {
+                event.stopPropagation();
+                event.preventDefault();
+
                 const [currentIndex, nextIndex] = resolveNextIndexToMoveTodoTo(currentTodoUUid, flatTodoCollection);
 
                 move(currentIndex, nextIndex);
             }
 
             if (checkIsKeyboardShortcut(event, 'ArrowUp', { shiftKey: true })) {
+                event.stopPropagation();
+                event.preventDefault();
+
                 const [currentIndex, nextIndex] = resolvePreviousIndexToMoveTodoTo(currentTodoUUid, flatTodoCollection);
 
                 move(currentIndex, nextIndex);
