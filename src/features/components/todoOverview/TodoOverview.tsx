@@ -14,6 +14,7 @@ import { resolveIndexInFlatCollection } from './utility/todoResolver';
 import Heading from '../../../primitives/heading/Heading';
 import useMoveTodoWithKeyboardShortcut from './hooks/useMoveTodoWithKeyboardShortcut';
 import { useTodos } from '../../../context/todo/TodoContext';
+import LoadingIndicator from '../../../primitives/loadingIndicator/LoadingIndicator';
 
 const TodoOverview: VFC = () => {
     const { todos, loading } = useTodos();
@@ -36,7 +37,7 @@ const TodoOverview: VFC = () => {
                 </Heading>
             </div>
             <div className="p-4 space-y-8">
-                {loading && <p>Loading..</p>}
+                {loading && <LoadingIndicator size="extraSmall" centered timeout={0} />}
 
                 {todos && todos.length > 0 ? (
                     <>
