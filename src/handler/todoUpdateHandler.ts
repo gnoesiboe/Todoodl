@@ -41,7 +41,7 @@ function resolvePriority(rawValue: string): TodoPriority | null {
 }
 
 function resolveStart(rawValue: string): Date | null {
-    const match = extractFirstLine(rawValue).match(/d:([^\s]+)/i);
+    const match = extractFirstLine(rawValue).match(/s:([^\s]+)/i);
 
     if (!match) {
         return null;
@@ -58,7 +58,7 @@ export function generateTodoUpdatesFromRawValue(rawValue: string): Partial<Todo>
 
     const withoutPrioritiesAndDeadlineIndicators = rawValue
         .replace(/@[^\s]+/g, '')
-        .replace(/d:[^\s]+/gi, '')
+        .replace(/s:[^\s]+/gi, '')
         .trim();
 
     const out: Partial<Todo> = {
