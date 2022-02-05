@@ -15,6 +15,7 @@ import Heading from '../../../primitives/heading/Heading';
 import useMoveTodoWithKeyboardShortcut from './hooks/useMoveTodoWithKeyboardShortcut';
 import { useTodos } from '../../../context/todo/TodoContext';
 import LoadingIndicator from '../../../primitives/loadingIndicator/LoadingIndicator';
+import Button from '../../../primitives/button/Button';
 
 const TodoOverview: VFC = () => {
     const { todos, loading } = useTodos();
@@ -43,51 +44,33 @@ const TodoOverview: VFC = () => {
                     <>
                         {todos.length > 0 ? (
                             <>
-                                <TodoOverviewFiltering
-                                    todos={todos}
-                                    appliedFilters={appliedFilters}
-                                    togglePriority={togglePriority}
-                                    toggleProject={toggleProject}
-                                    toggleTag={toggleTag}
-                                />
+                                <div className="flex justify-between">
+                                    <Button variant="primary">Add</Button>
+                                    <TodoOverviewFiltering
+                                        todos={todos}
+                                        appliedFilters={appliedFilters}
+                                        togglePriority={togglePriority}
+                                        toggleProject={toggleProject}
+                                        toggleTag={toggleTag}
+                                    />
+                                </div>
                                 <PriorityList>
                                     {priorities.map((priority) => (
                                         <PriorityGroup name={priority} key={priority}>
                                             {todosPreparedForDisplay[priority].length > 0 ? (
                                                 <TodoList>
-                                                    {todosPreparedForDisplay[priority].map((todo, index) => {
-                                                        const current = todo.uuid === currentTodoUuid;
-                                                        const todoIndexInFlatCollection = resolveIndexInFlatCollection(
-                                                            todo,
-                                                            todos,
-                                                        );
-
-                                                        return (
-                                                            <ViewTodo
-                                                                key={todo.uuid}
-                                                                todo={todo}
-                                                                current={current}
-                                                                onDescriptionClick={() => setCurrentTodoUuid(todo.uuid)}
-                                                                renderBefore={() => (
-                                                                    <AddTodo
-                                                                        priority={todo.priority}
-                                                                        atIndex={todoIndexInFlatCollection}
-                                                                        location="before"
-                                                                    />
-                                                                )}
-                                                                renderAfter={() => (
-                                                                    <>
-                                                                        <AddTodo
-                                                                            priority={todo.priority}
-                                                                            atIndex={todoIndexInFlatCollection}
-                                                                            location="after"
-                                                                        />
-                                                                        <DeleteTodo todo={todo} />
-                                                                    </>
-                                                                )}
-                                                            />
-                                                        );
-                                                    })}
+                                                    {todosPreparedForDisplay[priority].map((todo) => (
+                                                        <ViewTodo
+                                                            key={todo.uuid}
+                                                            todo={todo}
+                                                            current={todo.uuid === currentTodoUuid}
+                                                            onDescriptionClick={() => setCurrentTodoUuid(todo.uuid)}
+                                                            todoIndexInFlatCollection={resolveIndexInFlatCollection(
+                                                                todo,
+                                                                todos,
+                                                            )}
+                                                        />
+                                                    ))}
                                                 </TodoList>
                                             ) : (
                                                 <i>n.a.</i>

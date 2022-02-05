@@ -12,13 +12,14 @@ import useHandleActionListClickEvents from './hooks/useHandleActionListClickEven
 import useScrollIntoView from '../../../../../utility/useScrollIntoView';
 import Period from './components/Period';
 import { useManageTodos } from '../../../../../context/todo/TodoContext';
+import AddTodo from '../addTodo/AddTodo';
+import DeleteTodo from '../deleteTodo/DeleteTodo';
 
 type Props = {
     todo: Todo;
     current: boolean;
-    renderBefore: () => ReactNode;
-    renderAfter: () => ReactNode;
     onDescriptionClick: MouseEventHandler;
+    todoIndexInFlatCollection: number;
 };
 
 export enum Mode {
@@ -26,7 +27,7 @@ export enum Mode {
     Edit = 'edit',
 }
 
-const ViewTodo: VFC<Props> = ({ todo, current, renderAfter, renderBefore, onDescriptionClick }) => {
+const ViewTodo: VFC<Props> = ({ todo, current, onDescriptionClick, todoIndexInFlatCollection }) => {
     const [mode, setMode] = useState<Mode>(Mode.View);
 
     const { update } = useManageTodos();
@@ -53,7 +54,9 @@ const ViewTodo: VFC<Props> = ({ todo, current, renderAfter, renderBefore, onDesc
             {mode === Mode.Edit && <EditTodo todo={todo} onDone={() => setMode(Mode.View)} />}
             {mode === Mode.View && (
                 <>
-                    {current && renderBefore()}
+                    {current && (
+                        <AddTodo priority={todo.priority} atIndex={todoIndexInFlatCollection} location="before" />
+                    )}
                     <div className="flex gap-3 justify-start items-start">
                         <Checkbox todo={todo} onChange={toggleDone} />
                         <Description
@@ -76,7 +79,8 @@ const ViewTodo: VFC<Props> = ({ todo, current, renderAfter, renderBefore, onDesc
                                 </ActionButton>
                                 <ActionButton onClick={onDeleteClick}>delete</ActionButton>
                             </ActionList>
-                            {renderAfter()}
+                            <AddTodo priority={todo.priority} atIndex={todoIndexInFlatCollection} location="after" />
+                            <DeleteTodo todo={todo} />
                         </>
                     )}
                 </>
