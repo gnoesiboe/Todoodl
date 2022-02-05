@@ -94,6 +94,12 @@ const TodoOverview: VFC = () => {
                         </PriorityList>
                     </>
                 ) : (
+                    <p>
+                        <i>No todos yet</i>
+                    </p>
+                )}
+
+                {todos && todos.length === 0 && (
                     <AddTodo atIndex={0} priority="must" location="after" initiallyVisible />
                 )}
             </div>
