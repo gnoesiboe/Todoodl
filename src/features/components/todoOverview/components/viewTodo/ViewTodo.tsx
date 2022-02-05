@@ -54,10 +54,8 @@ const ViewTodo: VFC<Props> = ({ todo, current, renderAfter, renderBefore, onDesc
             {mode === Mode.View && (
                 <>
                     {current && renderBefore()}
-                    <div className="flex gap-3 justify-start">
-                        <div className="mt-1">
-                            <Checkbox todo={todo} onChange={toggleDone} />
-                        </div>
+                    <div className="flex gap-3 justify-start items-start">
+                        <Checkbox todo={todo} onChange={toggleDone} />
                         <Description
                             todo={todo}
                             onDoubleClick={() => setMode(Mode.Edit)}
