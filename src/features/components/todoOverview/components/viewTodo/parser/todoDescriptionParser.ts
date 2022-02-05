@@ -5,24 +5,15 @@ const toStrongTransformer: Transformer = (value) => {
 };
 
 const toLineThroughTransformer: Transformer = (value) => {
-    return value.replace(
-        /~~([^*]+)~~/g,
-        '<span class="line-through">$1</span>',
-    );
+    return value.replace(/~~([^*]+)~~/g, '<span class="line-through">$1</span>');
 };
 
 const toTagTransformer: Transformer = (value) => {
-    return value.replace(
-        /#([^ ]+)/gi,
-        '<span class="text-blue-500 italic">#$1</span>',
-    );
+    return value.replace(/#([^ ]+)/gi, '<span class="text-blue-500 italic">#$1</span>');
 };
 
 const toProjectTransformer: Transformer = (value) => {
-    return value.replace(
-        /^\[([a-z0-9]+)]/i,
-        '<strong class="uppercase">[$1]</strong> → ',
-    );
+    return value.replace(/^\[([a-z0-9]+)]/i, '<strong class="uppercase">[$1]</strong> → ');
 };
 
 const toOpenTodoListItemTransformer: Transformer = (value) => {
