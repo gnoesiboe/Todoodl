@@ -50,15 +50,27 @@ function resolveStart(rawValue: string): Date | null {
     return resolveDateForIndicator(match[1]);
 }
 
+function resolveDue(rawValue: string): Date | null {
+    const match = extractFirstLine(rawValue).match(/d:([^\s]+)/i);
+
+    if (!match) {
+        return null;
+    }
+
+    return resolveDateForIndicator(match[1]);
+}
+
 export function generateTodoUpdatesFromRawValue(rawValue: string): Partial<Todo> {
     const project = resolveProject(rawValue);
     const tags = resolveTags(rawValue);
     const priority = resolvePriority(rawValue);
     const start = resolveStart(rawValue);
+    const due = resolveDue(rawValue);
 
     const withoutPrioritiesAndDeadlineIndicators = rawValue
         .replace(/@[^\s]+/g, '')
         .replace(/s:[^\s]+/gi, '')
+        .replace(/d:[^\s]+/gi, '')
         .trim();
 
     const out: Partial<Todo> = {
@@ -70,6 +82,10 @@ export function generateTodoUpdatesFromRawValue(rawValue: string): Partial<Todo>
 
     if (start) {
         out['start'] = start;
+    }
+
+    if (due) {
+        out['due'] = due;
     }
 
     if (priority) {

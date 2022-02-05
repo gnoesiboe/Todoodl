@@ -17,6 +17,7 @@ export function transformDocumentSnapshotToModel(documentSnapshot: QueryDocument
         tags: data.tags,
         priority: data.priority as TodoPriority,
         start: data.start ? parseISOString(data.start) : null,
+        due: data.due ? parseISOString(data.due) : null,
         rank: data.rank,
     };
 }
@@ -31,6 +32,7 @@ export function transformModelToDocument(todo: Todo, user: User): TodoDocument {
         tags: todo.tags,
         priority: todo.priority,
         start: todo.start ? todo.start.toISOString() : undefined,
+        due: todo.due ? todo.due.toISOString() : undefined,
         rank: todo.rank,
     };
 

@@ -10,7 +10,7 @@ import ActionList from './components/ActionList';
 import ActionButton from './components/ActionButton';
 import useHandleActionListClickEvents from './hooks/useHandleActionListClickEvents';
 import useScrollIntoView from '../../../../../utility/useScrollIntoView';
-import StartDate from './components/StartDate';
+import Period from './components/Period';
 import { useManageTodos } from '../../../../../context/todo/TodoContext';
 
 type Props = {
@@ -62,7 +62,7 @@ const ViewTodo: VFC<Props> = ({ todo, current, renderAfter, renderBefore, onDesc
                             onClick={onDescriptionClick}
                             current={current}
                         />
-                        <StartDate todo={todo} />
+                        <Period todo={todo} />
                     </div>
                     {current && (
                         <>

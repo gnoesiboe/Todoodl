@@ -9,5 +9,6 @@ export interface TodoDocument extends DocumentData {
     tags: string[];
     priority: string;
     start?: string;
+    due?: string;
     rank: number;
 }
