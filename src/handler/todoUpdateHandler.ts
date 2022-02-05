@@ -67,15 +67,15 @@ export function generateTodoUpdatesFromRawValue(rawValue: string): Partial<Todo>
     const start = resolveStart(rawValue);
     const due = resolveDue(rawValue);
 
-    const withoutPrioritiesAndDeadlineIndicators = rawValue
+    const withoutPrioritiesAndDateIndicators = rawValue
         .replace(/@[^\s]+/g, '')
         .replace(/s:[^\s]+/gi, '')
         .replace(/d:[^\s]+/gi, '')
         .trim();
 
     const out: Partial<Todo> = {
-        rawValue: withoutPrioritiesAndDeadlineIndicators,
-        description: withoutPrioritiesAndDeadlineIndicators,
+        rawValue: withoutPrioritiesAndDateIndicators,
+        description: withoutPrioritiesAndDateIndicators,
         project,
         tags,
     };
