@@ -22,7 +22,7 @@ const TodoOverview: VFC = () => {
 
     const todosPreparedForDisplay = sortGroupAndFilterTodos(todos || [], appliedFilters);
 
-    const currentTodoUuid = useManageCurrentTodo(todosPreparedForDisplay);
+    const { currentTodoUuid, setCurrentTodoUuid } = useManageCurrentTodo(todosPreparedForDisplay);
 
     const priorities = Object.keys(todosPreparedForDisplay) as TodoPriority[];
 
@@ -64,6 +64,7 @@ const TodoOverview: VFC = () => {
                                                         key={todo.uuid}
                                                         todo={todo}
                                                         current={current}
+                                                        onDescriptionClick={() => setCurrentTodoUuid(todo.uuid)}
                                                         renderBefore={() => (
                                                             <AddTodo
                                                                 priority={todo.priority}

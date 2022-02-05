@@ -1,4 +1,4 @@
-import React, { useCallback, useState, VFC, ReactNode } from 'react';
+import React, { useCallback, useState, VFC, ReactNode, MouseEventHandler } from 'react';
 import { Todo } from '../../../../../model/todo';
 import EditTodo from '../editTodo/EditTodo';
 import Description from './components/Description';
@@ -18,6 +18,7 @@ type Props = {
     current: boolean;
     renderBefore: () => ReactNode;
     renderAfter: () => ReactNode;
+    onDescriptionClick: MouseEventHandler;
 };
 
 export enum Mode {
@@ -25,7 +26,7 @@ export enum Mode {
     Edit = 'edit',
 }
 
-const ViewTodo: VFC<Props> = ({ todo, current, renderAfter, renderBefore }) => {
+const ViewTodo: VFC<Props> = ({ todo, current, renderAfter, renderBefore, onDescriptionClick }) => {
     const [mode, setMode] = useState<Mode>(Mode.View);
 
     const { update } = useManageTodos();
@@ -57,7 +58,12 @@ const ViewTodo: VFC<Props> = ({ todo, current, renderAfter, renderBefore }) => {
                         <div className="mt-1">
                             <Checkbox todo={todo} onChange={toggleDone} />
                         </div>
-                        <Description todo={todo} onDoubleClick={() => setMode(Mode.Edit)} current={current} />
+                        <Description
+                            todo={todo}
+                            onDoubleClick={() => setMode(Mode.Edit)}
+                            onClick={onDescriptionClick}
+                            current={current}
+                        />
                         <StartDate todo={todo} />
                     </div>
                     {current && (

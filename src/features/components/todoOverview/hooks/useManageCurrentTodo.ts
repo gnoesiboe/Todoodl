@@ -9,17 +9,17 @@ import {
 } from '../../../../resolver/todoResolver';
 import { checkIsKeyboardShortcut } from '../../../../utility/keyboardUtilities';
 
-export default function useManageCurrentTodo(
-    groupedTodos: GroupedTodoCollection,
-): string | null {
-    const [currentTodoUuid, setCurrentTodoUuid] = useState<string | null>(
-        () => {
-            return (
-                resolveFirstTodoInGroupedTodoCollection(groupedTodos)?.uuid ||
-                null
-            );
-        },
-    );
+type SetCurrentTodoUuidHandler = (uuid: string) => void;
+
+type Output = {
+    currentTodoUuid: string | null;
+    setCurrentTodoUuid: SetCurrentTodoUuidHandler;
+};
+
+export default function useManageCurrentTodo(groupedTodos: GroupedTodoCollection): Output {
+    const [currentTodoUuid, setCurrentTodoUuidState] = useState<string | null>(() => {
+        return resolveFirstTodoInGroupedTodoCollection(groupedTodos)?.uuid || null;
+    });
 
     const onKeyDown = useCallback(
         (event: WindowEventMap['keydown']) => {
@@ -30,16 +30,13 @@ export default function useManageCurrentTodo(
             const isNext = checkIsKeyboardShortcut(event, 'ArrowDown');
             const isPrevious = checkIsKeyboardShortcut(event, 'ArrowUp');
 
-            setCurrentTodoUuid((currentTodoUuid) => {
+            setCurrentTodoUuidState((currentTodoUuid) => {
                 if (isNext) {
                     return resolveNextTodoUuid(currentTodoUuid, groupedTodos);
                 }
 
                 if (isPrevious) {
-                    return resolvePreviousTodoUuid(
-                        currentTodoUuid,
-                        groupedTodos,
-                    );
+                    return resolvePreviousTodoUuid(currentTodoUuid, groupedTodos);
                 }
 
                 return currentTodoUuid;
@@ -49,14 +46,8 @@ export default function useManageCurrentTodo(
     );
 
     useEffect(() => {
-        if (
-            !currentTodoUuid ||
-            !checkIfTodoIsInGroupedTodoCollection(currentTodoUuid, groupedTodos)
-        ) {
-            setCurrentTodoUuid(
-                resolveFirstTodoInGroupedTodoCollection(groupedTodos)?.uuid ||
-                    null,
-            );
+        if (!currentTodoUuid || !checkIfTodoIsInGroupedTodoCollection(currentTodoUuid, groupedTodos)) {
+            setCurrentTodoUuidState(resolveFirstTodoInGroupedTodoCollection(groupedTodos)?.uuid || null);
         }
     }, [currentTodoUuid, groupedTodos]);
 
@@ -66,5 +57,9 @@ export default function useManageCurrentTodo(
         return () => window.removeEventListener('keydown', onKeyDown);
     }, [onKeyDown]);
 
-    return currentTodoUuid;
+    const setCurrentTodoUuid: SetCurrentTodoUuidHandler = (currentTodoUuid) => {
+        setCurrentTodoUuidState(currentTodoUuid);
+    };
+
+    return { currentTodoUuid, setCurrentTodoUuid };
 }
