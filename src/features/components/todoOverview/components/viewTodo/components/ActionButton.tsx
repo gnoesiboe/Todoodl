@@ -8,13 +8,7 @@ type Props = {
 };
 
 const ActionButton: FC<Props> = ({ onClick, children, disabled = false }) => (
-    <Button
-        variant="link"
-        deflated
-        onClick={onClick}
-        disabled={disabled}
-        className="text-gray-500 text-sm inline-flex items-center gap-1"
-    >
+    <Button variant="link" deflated onClick={onClick} disabled={disabled} className="text-gray-500 text-sm">
         {children}
     </Button>
 );

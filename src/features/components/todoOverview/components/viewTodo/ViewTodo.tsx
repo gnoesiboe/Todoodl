@@ -16,7 +16,6 @@ import AddTodo from '../addTodo/AddTodo';
 import DeleteTodo from '../deleteTodo/DeleteTodo';
 import useShowAddTodo from './hooks/useShowAddTodo';
 import ActionListSeparator from './components/ActionListSeparator';
-import { Plus, PlusSquare } from 'react-feather';
 
 type Props = {
     todo: Todo;
@@ -93,10 +92,10 @@ const ViewTodo: VFC<Props> = ({ todo, current, onDescriptionClick, todoIndexInFl
                                 </ActionButton>
                                 <ActionListSeparator />
                                 <ActionButton onClick={onAddBeforeButtonClick} disabled={showAddLocation !== null}>
-                                    <Plus size={10} /> before
+                                    before
                                 </ActionButton>
                                 <ActionButton onClick={onAddAfterButtonClick} disabled={showAddLocation !== null}>
-                                    <Plus size={10} /> after
+                                    after
                                 </ActionButton>
                                 <ActionListSeparator />
                                 <ActionButton onClick={onEditClick}>edit</ActionButton>
