@@ -3,7 +3,6 @@ import ViewTodo from './components/viewTodo/ViewTodo';
 import { TodoPriority } from '../../../model/todo';
 import useManageCurrentTodo from './hooks/useManageCurrentTodo';
 import AddTodo from './components/addTodo/AddTodo';
-import DeleteTodo from './components/deleteTodo/DeleteTodo';
 import { sortGroupAndFilterTodos } from './utility/collectionUtilities';
 import PriorityGroup from './components/PriorityGroup';
 import PriorityList from './components/PriorityList';
@@ -15,7 +14,6 @@ import Heading from '../../../primitives/heading/Heading';
 import useMoveTodoWithKeyboardShortcut from './hooks/useMoveTodoWithKeyboardShortcut';
 import { useTodos } from '../../../context/todo/TodoContext';
 import LoadingIndicator from '../../../primitives/loadingIndicator/LoadingIndicator';
-import Button from '../../../primitives/button/Button';
 
 const TodoOverview: VFC = () => {
     const { todos, loading } = useTodos();
@@ -44,16 +42,14 @@ const TodoOverview: VFC = () => {
                     <>
                         {todos.length > 0 ? (
                             <>
-                                <div className="flex justify-between">
-                                    <Button variant="primary">Add</Button>
-                                    <TodoOverviewFiltering
-                                        todos={todos}
-                                        appliedFilters={appliedFilters}
-                                        togglePriority={togglePriority}
-                                        toggleProject={toggleProject}
-                                        toggleTag={toggleTag}
-                                    />
-                                </div>
+                                <TodoOverviewFiltering
+                                    todos={todos}
+                                    appliedFilters={appliedFilters}
+                                    togglePriority={togglePriority}
+                                    toggleProject={toggleProject}
+                                    toggleTag={toggleTag}
+                                    className="mb-10"
+                                />
                                 <PriorityList>
                                     {priorities.map((priority) => (
                                         <PriorityGroup name={priority} key={priority}>
@@ -80,7 +76,7 @@ const TodoOverview: VFC = () => {
                                 </PriorityList>
                             </>
                         ) : (
-                            <AddTodo atIndex={0} priority="must" location="after" initiallyVisible />
+                            <AddTodo atIndex={0} priority="must" />
                         )}
                     </>
                 )}

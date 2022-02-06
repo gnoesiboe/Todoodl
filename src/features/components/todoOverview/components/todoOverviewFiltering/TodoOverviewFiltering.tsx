@@ -11,9 +11,10 @@ import {
 import ProjectChoiceList from './components/ProjectChoiceList';
 import useToggleVisibility from '../../../../../hooks/useToggleVisibility';
 import Button from '../../../../../primitives/button/Button';
-import { X } from 'react-feather';
+import { X, Filter } from 'react-feather';
 import { determineAmountOfAppliedFilters } from './utilities/optionExtractionUtilities';
 import TagsChoiceList from './components/TagsChoiceList';
+import createClassName from 'classnames';
 
 type Props = {
     todos: TodoCollection;
@@ -21,47 +22,56 @@ type Props = {
     togglePriority: TogglePriorityHandler;
     toggleProject: ToggleProjectHandler;
     toggleTag: ToggleTagHandler;
+    className?: string;
 };
 
-const TodoOverviewFiltering: VFC<Props> = ({ todos, appliedFilters, togglePriority, toggleProject, toggleTag }) => {
+const TodoOverviewFiltering: VFC<Props> = ({
+    todos,
+    appliedFilters,
+    togglePriority,
+    toggleProject,
+    toggleTag,
+    className: additionalClassName,
+}) => {
     const { visible, show, hide } = useToggleVisibility(false);
 
     const options = useHandleFilterOptions(todos);
 
-    if (visible) {
-        return (
-            <div className="flex items-start justify-between border-b-2 pb-10">
-                <div className="flex gap-10">
-                    <PrioritiesChoiceList
-                        appliedFilters={appliedFilters.priorities}
-                        filterMap={options.priorities}
-                        togglePriority={togglePriority}
-                    />
-                    <ProjectChoiceList
-                        appliedFilters={appliedFilters.projects}
-                        filterMap={options.projects}
-                        toggleProject={toggleProject}
-                    />
-                    <TagsChoiceList
-                        appliedFilters={appliedFilters.tags}
-                        toggleTag={toggleTag}
-                        filterMap={options.tags}
-                    />
-                </div>
-                <Button variant="unstyled" onClick={hide}>
-                    <X />
-                </Button>
-            </div>
-        );
-    }
-
     const appliedFilterCount = determineAmountOfAppliedFilters(appliedFilters);
 
-    // @todo show number of filters applied
+    const containerClassName = createClassName('border-b-2', additionalClassName);
+
     return (
-        <Button variant="primary" onClick={show}>
-            Filter {appliedFilterCount > 0 && `(${appliedFilterCount})`}
-        </Button>
+        <div className={containerClassName}>
+            {visible ? (
+                <div className="flex items-start justify-between pb-10">
+                    <div className="flex gap-10">
+                        <PrioritiesChoiceList
+                            appliedFilters={appliedFilters.priorities}
+                            filterMap={options.priorities}
+                            togglePriority={togglePriority}
+                        />
+                        <ProjectChoiceList
+                            appliedFilters={appliedFilters.projects}
+                            filterMap={options.projects}
+                            toggleProject={toggleProject}
+                        />
+                        <TagsChoiceList
+                            appliedFilters={appliedFilters.tags}
+                            toggleTag={toggleTag}
+                            filterMap={options.tags}
+                        />
+                    </div>
+                    <Button variant="unstyled" onClick={hide}>
+                        <X />
+                    </Button>
+                </div>
+            ) : (
+                <Button variant="link" className="flex gap-2 items-center" deflated="x" onClick={show}>
+                    <Filter size={14} /> Filter {appliedFilterCount > 0 && `(${appliedFilterCount})`}
+                </Button>
+            )}
+        </div>
     );
 };
 

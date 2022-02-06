@@ -14,6 +14,9 @@ import Period from './components/Period';
 import { useManageTodos } from '../../../../../context/todo/TodoContext';
 import AddTodo from '../addTodo/AddTodo';
 import DeleteTodo from '../deleteTodo/DeleteTodo';
+import useShowAddTodo from './hooks/useShowAddTodo';
+import ActionListSeparator from './components/ActionListSeparator';
+import { Plus, PlusSquare } from 'react-feather';
 
 type Props = {
     todo: Todo;
@@ -49,40 +52,67 @@ const ViewTodo: VFC<Props> = ({ todo, current, onDescriptionClick, todoIndexInFl
 
     const ref = useScrollIntoView<HTMLDivElement>(current);
 
+    const {
+        location: showAddLocation,
+        hide: hideAdd,
+        onAddBeforeButtonClick,
+        onAddAfterButtonClick,
+    } = useShowAddTodo();
+
     return (
-        <div className={className} ref={ref}>
+        <div ref={ref}>
             {mode === Mode.Edit && <EditTodo todo={todo} onDone={() => setMode(Mode.View)} />}
             {mode === Mode.View && (
                 <>
-                    {current && (
-                        <AddTodo priority={todo.priority} atIndex={todoIndexInFlatCollection} location="before" />
-                    )}
-                    <div className="flex gap-3 justify-start items-start">
-                        <Checkbox todo={todo} onChange={toggleDone} />
-                        <Description
-                            todo={todo}
-                            onDoubleClick={() => setMode(Mode.Edit)}
-                            onClick={onDescriptionClick}
-                            current={current}
+                    {current && showAddLocation === 'before' && (
+                        <AddTodo
+                            priority={todo.priority}
+                            atIndex={todoIndexInFlatCollection}
+                            onDone={hideAdd}
+                            className="my-5"
                         />
-                        <Period todo={todo} />
-                    </div>
-                    {current && (
-                        <>
+                    )}
+                    <div className={className}>
+                        <div className="flex gap-3 justify-start items-start">
+                            <Checkbox todo={todo} onChange={toggleDone} />
+                            <Description
+                                todo={todo}
+                                onDoubleClick={() => setMode(Mode.Edit)}
+                                onClick={onDescriptionClick}
+                                current={current}
+                            />
+                            <Period todo={todo} />
+                        </div>
+                        {current && (
                             <ActionList>
-                                <ActionButton onClick={onEditClick}>edit</ActionButton>
                                 <ActionButton onClick={onMustClick} disabled={todo.priority === 'must'}>
                                     must
                                 </ActionButton>
                                 <ActionButton onClick={onShouldClick} disabled={todo.priority === 'should'}>
                                     should
                                 </ActionButton>
+                                <ActionListSeparator />
+                                <ActionButton onClick={onAddBeforeButtonClick} disabled={showAddLocation !== null}>
+                                    <Plus size={10} /> before
+                                </ActionButton>
+                                <ActionButton onClick={onAddAfterButtonClick} disabled={showAddLocation !== null}>
+                                    <Plus size={10} /> after
+                                </ActionButton>
+                                <ActionListSeparator />
+                                <ActionButton onClick={onEditClick}>edit</ActionButton>
                                 <ActionButton onClick={onDeleteClick}>delete</ActionButton>
                             </ActionList>
-                            <AddTodo priority={todo.priority} atIndex={todoIndexInFlatCollection} location="after" />
-                            <DeleteTodo todo={todo} />
-                        </>
+                        )}
+                    </div>
+                    {current && showAddLocation === 'after' && (
+                        <AddTodo
+                            priority={todo.priority}
+                            atIndex={todoIndexInFlatCollection + 1}
+                            onDone={hideAdd}
+                            className="my-5"
+                        />
                     )}
+                    {current && <DeleteTodo todo={todo} />}
                 </>
             )}
         </div>

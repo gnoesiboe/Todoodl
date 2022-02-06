@@ -16,8 +16,6 @@ export default function useScrollIntoView<RefType extends HTMLElement>(active: b
 
         // Target is outside the view from the top
         if (ref.current.getBoundingClientRect().top < 0) {
-            console.log('scroll into view', true);
-
             // The top of the target will be aligned to the top of the visible area of the scrollable ancestor
             ref.current.scrollIntoView();
         }

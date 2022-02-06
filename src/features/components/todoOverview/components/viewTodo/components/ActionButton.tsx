@@ -1,14 +1,20 @@
-import { MouseEventHandler, FC } from 'react';
+import { MouseEventHandler, FC, ReactNode } from 'react';
 import Button from '../../../../../../primitives/button/Button';
 
 type Props = {
     onClick: MouseEventHandler<HTMLButtonElement>;
-    children: string;
+    children: ReactNode;
     disabled?: boolean;
 };
 
 const ActionButton: FC<Props> = ({ onClick, children, disabled = false }) => (
-    <Button variant="link" deflated onClick={onClick} disabled={disabled} className="text-gray-500 text-sm">
+    <Button
+        variant="link"
+        deflated
+        onClick={onClick}
+        disabled={disabled}
+        className="text-gray-500 text-sm inline-flex items-center gap-1"
+    >
         {children}
     </Button>
 );

@@ -3,7 +3,7 @@ import createClassName from 'classnames';
 
 type Props = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & {
     variant: 'primary' | 'secondary' | 'link' | 'unstyled';
-    deflated?: boolean;
+    deflated?: boolean | 'x';
 };
 
 const Button: FC<Props> = ({
@@ -17,7 +17,8 @@ const Button: FC<Props> = ({
     const className = createClassName(additionalClassName, {
         'bg-blue-400': variant === 'primary',
         'bg-gray-400': variant === 'secondary',
-        'py-2 px-4': !deflated && variant !== 'unstyled',
+        'py-2 px-4': !deflated === true && variant !== 'unstyled',
+        'py-2': deflated === 'x' && variant !== 'unstyled',
         'hover:underline': variant === 'link' && !disabled,
         'cursor-not-allowed opacity-50': disabled,
     });
