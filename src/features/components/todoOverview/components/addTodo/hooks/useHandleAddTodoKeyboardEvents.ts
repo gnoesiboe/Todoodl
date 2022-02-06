@@ -16,6 +16,10 @@ export default function useHandleAddTodoKeyboardEvents(
     useEffect(() => {
         const onKeyDown = (event: WindowEventMap['keydown']) => {
             if (checkIsKeyboardShortcut(event, 'Enter', { ctrlKey: true })) {
+                if (rawValue.trim().length === 0) {
+                    return;
+                }
+
                 const todo = createTodoFromRawValue(rawValue);
 
                 // @todo this overrides any priority set in the raw value, fix this!

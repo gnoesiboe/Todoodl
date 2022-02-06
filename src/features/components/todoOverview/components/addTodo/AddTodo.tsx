@@ -25,6 +25,10 @@ const AddTodo: VFC<Props> = ({ atIndex, priority, className, onDone = () => {} }
         // prevent submitting to backend
         event.preventDefault();
 
+        if (rawValue.trim().length === 0) {
+            return;
+        }
+
         const todo = createTodoFromRawValue(rawValue);
         todo.priority = priority;
 
