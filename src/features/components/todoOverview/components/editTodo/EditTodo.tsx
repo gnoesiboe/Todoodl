@@ -41,8 +41,10 @@ const EditTodo: VFC<Props> = ({ todo, onDone }) => {
                 onChange={(event) => setRawValue(event.target.value)}
             />
             <div className="space-x-2">
-                <Button variant="primary">Save</Button>
-                <Button variant="secondary" onClick={() => onDone()}>
+                <Button variant="primary" type="submit" disabled={rawValue.trim().length === 0}>
+                    Save
+                </Button>
+                <Button variant="secondary" type="button" onClick={() => onDone()}>
                     Cancel
                 </Button>
             </div>

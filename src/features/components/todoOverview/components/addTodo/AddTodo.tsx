@@ -50,7 +50,7 @@ const AddTodo: VFC<Props> = ({ atIndex, priority, className, onDone = () => {} }
                 placeholder="[home] Do the dishes #quickfix @should s:today d:today"
             />
             <div className="space-x-2">
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" disabled={rawValue.trim().length === 0}>
                     Save
                 </Button>
                 <Button variant="secondary" type="button" onClick={onCancel}>
