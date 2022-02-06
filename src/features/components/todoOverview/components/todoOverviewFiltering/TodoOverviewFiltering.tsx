@@ -33,7 +33,7 @@ const TodoOverviewFiltering: VFC<Props> = ({
     toggleTag,
     className: additionalClassName,
 }) => {
-    const { visible, show, hide } = useToggleVisibility(true); // @todo revert
+    const { visible, show, hide } = useToggleVisibility(false);
 
     const options = useHandleFilterOptions(todos);
 
