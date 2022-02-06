@@ -20,7 +20,7 @@ const Button: FC<Props> = ({
         'py-2 px-4': !deflated === true && variant !== 'unstyled',
         'py-2': deflated === 'x' && variant !== 'unstyled',
         'hover:underline': variant === 'link' && !disabled,
-        'cursor-not-allowed opacity-50': disabled,
+        'cursor-not-allowed opacity-40': disabled,
     });
 
     return (
