@@ -1,11 +1,11 @@
 import { VFC } from 'react';
 
 type Props = {
-    checked: boolean;
+    checked?: boolean;
     toggleChecked: () => void;
 };
 
-const Checkbox: VFC<Props> = ({ checked, toggleChecked }) => (
+const Checkbox: VFC<Props> = ({ checked = false, toggleChecked }) => (
     <input
         type="checkbox"
         checked={checked}

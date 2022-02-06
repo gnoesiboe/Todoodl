@@ -1,5 +1,5 @@
 import { TodoCollection, TodoPriority } from '../../../../model/todo';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import produce from 'immer';
 import { extractAllProjects, extractAllTags } from '../utility/collectionUtilities';
 
@@ -19,13 +19,13 @@ export type ToggleTagHandler = (tag: string) => void;
 
 export default function useHandleFilterState(todos: TodoCollection) {
     const [appliedFilters, setAppliedFilters] = useState<FilterState>(() => {
-        const allProjects = extractAllProjects(todos);
+        const allUsedProjects = extractAllProjects(todos);
         const projectMap: TypeToCheckedStatusMap = {};
-        allProjects.forEach((project) => (projectMap[project] = true));
+        allUsedProjects.forEach((project) => (projectMap[project] = true));
 
-        const allTags = extractAllTags(todos);
+        const allUsedTags = extractAllTags(todos);
         const tagsMap: TypeToCheckedStatusMap = {};
-        allTags.forEach((tag) => (tagsMap[tag] = true));
+        allUsedTags.forEach((tag) => (tagsMap[tag] = true));
 
         return {
             priorities: {
@@ -38,6 +38,27 @@ export default function useHandleFilterState(todos: TodoCollection) {
             tags: tagsMap,
         };
     });
+
+    useEffect(() => {
+        const allUsedProjects = extractAllProjects(todos);
+        const allUsedTags = extractAllTags(todos);
+
+        setAppliedFilters((currentAppliedFilters) => {
+            return produce<FilterState>(currentAppliedFilters, (newAppliedFilters) => {
+                allUsedProjects.forEach((usedProject) => {
+                    if (newAppliedFilters.projects[usedProject] === undefined) {
+                        newAppliedFilters.projects[usedProject] = true;
+                    }
+                });
+
+                allUsedTags.forEach((usedTag) => {
+                    if (newAppliedFilters.tags[usedTag] === undefined) {
+                        newAppliedFilters.tags[usedTag] = true;
+                    }
+                });
+            });
+        });
+    }, [todos]);
 
     const togglePriority: TogglePriorityHandler = (priority) => {
         setAppliedFilters((currentFilterState) => {
