@@ -16,6 +16,10 @@ type Props = {
 const TagsChoiceList: VFC<Props> = ({ appliedFilters, filterMap, toggleTag }) => {
     const tags = Object.keys(filterMap);
 
+    if (tags.length === 0) {
+        return null;
+    }
+
     return (
         <SectionContainer>
             <SectionHeading label="Tag" />

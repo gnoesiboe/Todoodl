@@ -13,28 +13,20 @@ type Props = {
     filterMap: FilterMap;
 };
 
-const ProjectChoiceList: VFC<Props> = ({
-    appliedFilters,
-    filterMap,
-    toggleProject,
-}) => {
+const ProjectChoiceList: VFC<Props> = ({ appliedFilters, filterMap, toggleProject }) => {
     const projects = Object.keys(filterMap);
+
+    if (projects.length === 0) {
+        return null;
+    }
 
     return (
         <SectionContainer>
             <SectionHeading label="Project" />
             <FilterList>
                 {projects.map((project) => (
-                    <Label
-                        key={project}
-                        label={project}
-                        checked={appliedFilters[project]}
-                        amount={filterMap[project]}
-                    >
-                        <Checkbox
-                            checked={appliedFilters[project]}
-                            toggleChecked={() => toggleProject(project)}
-                        />
+                    <Label key={project} label={project} checked={appliedFilters[project]} amount={filterMap[project]}>
+                        <Checkbox checked={appliedFilters[project]} toggleChecked={() => toggleProject(project)} />
                     </Label>
                 ))}
             </FilterList>
