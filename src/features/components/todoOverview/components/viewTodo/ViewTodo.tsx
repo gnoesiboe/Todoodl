@@ -80,9 +80,9 @@ const ViewTodo: VFC<Props> = ({ todo, current, onDescriptionClick, todoIndexInFl
                                 onClick={onDescriptionClick}
                                 current={current}
                             />
-                            <Period todo={todo} />
+                            {!todo.doneAt && <Period todo={todo} />}
                         </div>
-                        {current && (
+                        {current && !todo.doneAt && (
                             <ActionList>
                                 <ActionButton onClick={onMustClick} disabled={todo.priority === 'must'}>
                                     must
