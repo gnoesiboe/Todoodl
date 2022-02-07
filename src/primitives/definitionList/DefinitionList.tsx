@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 const Container: FC = ({ children }) => {
-    return <dl className="">{children}</dl>;
+    return <dl className="space-y-5">{children}</dl>;
 };
 
 const Row: FC = ({ children }) => {
@@ -13,7 +13,7 @@ const Term: FC = ({ children }) => {
 };
 
 const Definition: FC = ({ children }) => {
-    return <dd className="flex-1">{children}</dd>;
+    return <dd className="flex-1 space-y-2">{children}</dd>;
 };
 
 // eslint-disable-next-line

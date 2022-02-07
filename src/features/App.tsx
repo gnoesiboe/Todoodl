@@ -1,12 +1,12 @@
 import React from 'react';
 import TodoOverview from './components/todoOverview/TodoOverview';
-import KeyboardShortcutOverview from './components/keyboardShortcutOverview/KeyboardShortcutOverview';
+import UsageOverview from './components/usageOverview/UsageOverview';
 import { TodoContextProvider } from '../context/todo/TodoContext';
 import { AuthContextProvider } from '../auth/AuthContext';
 import useSwitchAfterTimeout from '../hooks/useSwitchAfterTimeout';
 
 function App() {
-    const keyboardShortcutOverviewVisible = useSwitchAfterTimeout(false, 2000);
+    const usageOverviewVisible = useSwitchAfterTimeout(false, 2000);
 
     return (
         <AuthContextProvider>
@@ -14,7 +14,7 @@ function App() {
                 <TodoContextProvider>
                     <TodoOverview />
                 </TodoContextProvider>
-                {keyboardShortcutOverviewVisible && <KeyboardShortcutOverview />}
+                {usageOverviewVisible && <UsageOverview />}
             </main>
         </AuthContextProvider>
     );
