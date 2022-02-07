@@ -17,6 +17,10 @@ import {
 } from 'date-fns';
 import nl from 'date-fns/locale/nl';
 
+export function checkIsToday(date: Date): boolean {
+    return isToday(date);
+}
+
 export function resolveDateForIndicator(indicator: string): Date | null {
     const normalizedIndicator = indicator.trim().toLowerCase();
 
