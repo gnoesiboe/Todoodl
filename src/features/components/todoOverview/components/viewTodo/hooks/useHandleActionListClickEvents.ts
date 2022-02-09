@@ -16,6 +16,8 @@ export default function useHandleActionListClickEvents(todo: Todo, setMode: Disp
 
     const onMustClick: MouseEventHandler<HTMLButtonElement> = () => updatePriority(todo, 'must');
     const onShouldClick: MouseEventHandler<HTMLButtonElement> = () => updatePriority(todo, 'should');
+    const onCouldClick: MouseEventHandler<HTMLButtonElement> = () => updatePriority(todo, 'could');
+    const onWouldClick: MouseEventHandler<HTMLButtonElement> = () => updatePriority(todo, 'would');
 
     const onDeleteClick: MouseEventHandler<HTMLButtonElement> = () => {
         // eslint-disable-next-line no-restricted-globals
@@ -26,5 +28,5 @@ export default function useHandleActionListClickEvents(todo: Todo, setMode: Disp
         }
     };
 
-    return { onEditClick, onMustClick, onShouldClick, onDeleteClick };
+    return { onEditClick, onMustClick, onShouldClick, onCouldClick, onWouldClick, onDeleteClick };
 }

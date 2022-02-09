@@ -16,6 +16,7 @@ import AddTodo from '../addTodo/AddTodo';
 import DeleteTodo from '../deleteTodo/DeleteTodo';
 import useShowAddTodo from './hooks/useShowAddTodo';
 import ActionListSeparator from './components/ActionListSeparator';
+import ActionListGroup from './components/ActionListGroup';
 
 type Props = {
     todo: Todo;
@@ -43,7 +44,8 @@ const ViewTodo: VFC<Props> = ({ todo, current, onDescriptionClick, todoIndexInFl
     useStartEditWithKeyboardShortcut(current, mode, setMode);
     useToggleToggleDoneWithKeyboardShortcut(current, mode, toggleDone);
 
-    const { onEditClick, onMustClick, onShouldClick, onDeleteClick } = useHandleActionListClickEvents(todo, setMode);
+    const { onEditClick, onMustClick, onShouldClick, onCouldClick, onWouldClick, onDeleteClick } =
+        useHandleActionListClickEvents(todo, setMode);
 
     const className = createClassName('p-2', 'rounded-sm', {
         'bg-blue-100': current,
@@ -79,24 +81,35 @@ const ViewTodo: VFC<Props> = ({ todo, current, onDescriptionClick, todoIndexInFl
                                 onDoubleClick={() => setMode(Mode.Edit)}
                                 onClick={onDescriptionClick}
                                 current={current}
+                                className="w-full"
                             />
-                            {!todo.doneAt && <Period todo={todo} />}
+                            {!todo.doneAt && <Period todo={todo} className="float-right flex-none" />}
                         </div>
                         {current && !todo.doneAt && (
-                            <ActionList>
-                                <ActionButton onClick={onMustClick} disabled={todo.priority === 'must'}>
-                                    must
-                                </ActionButton>
-                                <ActionButton onClick={onShouldClick} disabled={todo.priority === 'should'}>
-                                    should
-                                </ActionButton>
+                            <ActionList level={1}>
+                                <ActionListGroup label="priority">
+                                    <ActionButton onClick={onMustClick} disabled={todo.priority === 'must'}>
+                                        must
+                                    </ActionButton>
+                                    <ActionButton onClick={onShouldClick} disabled={todo.priority === 'should'}>
+                                        should
+                                    </ActionButton>
+                                    <ActionButton onClick={onCouldClick} disabled={todo.priority === 'could'}>
+                                        could
+                                    </ActionButton>
+                                    <ActionButton onClick={onWouldClick} disabled={todo.priority === 'would'}>
+                                        would
+                                    </ActionButton>
+                                </ActionListGroup>
                                 <ActionListSeparator />
-                                <ActionButton onClick={onAddBeforeButtonClick} disabled={showAddLocation !== null}>
-                                    before
-                                </ActionButton>
-                                <ActionButton onClick={onAddAfterButtonClick} disabled={showAddLocation !== null}>
-                                    after
-                                </ActionButton>
+                                <ActionListGroup label="add new">
+                                    <ActionButton onClick={onAddBeforeButtonClick} disabled={showAddLocation !== null}>
+                                        before
+                                    </ActionButton>
+                                    <ActionButton onClick={onAddAfterButtonClick} disabled={showAddLocation !== null}>
+                                        after
+                                    </ActionButton>
+                                </ActionListGroup>
                                 <ActionListSeparator />
                                 <ActionButton onClick={onEditClick}>edit</ActionButton>
                                 <ActionButton onClick={onDeleteClick}>delete</ActionButton>
