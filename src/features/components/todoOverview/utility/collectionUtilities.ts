@@ -41,12 +41,6 @@ export function sortGroupAndFilterTodos(todos: TodoCollection, appliedFilters: F
         });
     }
 
-    if (!appliedFilters.presets.waiting) {
-        filteredTodos = filteredTodos.filter((todo) => {
-            return !todo.tags.includes('waiting');
-        });
-    }
-
     if (!appliedFilters.presets.done) {
         filteredTodos = filteredTodos.filter((todo) => {
             return !todo.doneAt;

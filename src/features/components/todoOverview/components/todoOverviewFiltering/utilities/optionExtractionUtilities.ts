@@ -22,17 +22,12 @@ export function composePriorityFilterMap(todos: TodoCollection): FilterMap<TodoP
 export function composePresetFilterMap(todos: TodoCollection): FilterMap<Preset> {
     const map: FilterMap<Preset> = {
         postponed: 0,
-        waiting: 0,
         done: 0,
     };
 
     todos.forEach((todo) => {
         if (todo.start === null || checkIsToday(todo.start)) {
             map.postponed++;
-        }
-
-        if (todo.tags.includes('waiting')) {
-            map.waiting++;
         }
 
         if (!!todo.doneAt) {
