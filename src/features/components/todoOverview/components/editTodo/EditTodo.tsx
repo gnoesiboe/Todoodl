@@ -35,7 +35,7 @@ const EditTodo: VFC<Props> = ({ todo, onDone }) => {
         <form onSubmit={onSubmit}>
             <TextareaAutosize
                 autoFocus
-                className="p-2 w-full"
+                className="p-3 w-full font-mono text-sm"
                 value={rawValue}
                 onKeyDown={onKeyDown}
                 onChange={(event) => setRawValue(event.target.value)}
