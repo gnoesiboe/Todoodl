@@ -5,7 +5,7 @@ import { extractAllProjects, extractAllTags } from '../utility/collectionUtiliti
 
 export type TypeToCheckedStatusMap<KeyType extends string = string> = Record<KeyType, boolean>;
 
-export type Preset = 'postponed';
+export type Preset = 'postponed' | 'waiting';
 
 export type FilterState = {
     priorities: TypeToCheckedStatusMap<TodoPriority>;
@@ -41,6 +41,7 @@ export default function useHandleFilterState(todos: TodoCollection) {
             },
             presets: {
                 postponed: true,
+                waiting: true,
             },
             projects: projectMap,
             tags: tagsMap,

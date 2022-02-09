@@ -41,6 +41,12 @@ export function sortGroupAndFilterTodos(todos: TodoCollection, appliedFilters: F
         });
     }
 
+    if (!appliedFilters.presets.waiting) {
+        filteredTodos = filteredTodos.filter((todo) => {
+            return !todo.tags.includes('waiting');
+        });
+    }
+
     const groupedTodos: GroupedTodoCollection = {
         must: [],
         should: [],

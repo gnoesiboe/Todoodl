@@ -20,6 +20,9 @@ const PresetChoiceList: VFC<Props> = ({ appliedFilters, togglePreset, filterMap 
             <Label label="postponed" checked={appliedFilters['postponed']} amount={filterMap['postponed']}>
                 <Checkbox checked={appliedFilters['postponed']} toggleChecked={() => togglePreset('postponed')} />
             </Label>
+            <Label label="waiting" checked={appliedFilters['waiting']} amount={filterMap['waiting']}>
+                <Checkbox checked={appliedFilters['waiting']} toggleChecked={() => togglePreset('waiting')} />
+            </Label>
         </FilterList>
     </SectionContainer>
 );
