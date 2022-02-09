@@ -8,6 +8,7 @@ type Props = {
 const Checkbox: VFC<Props> = ({ checked = false, toggleChecked }) => (
     <input
         type="checkbox"
+        className="text-gray-400"
         checked={checked}
         onChange={(event) => {
             toggleChecked();
