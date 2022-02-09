@@ -5,8 +5,11 @@ import { extractAllProjects, extractAllTags } from '../utility/collectionUtiliti
 
 export type TypeToCheckedStatusMap<KeyType extends string = string> = Record<KeyType, boolean>;
 
+export type Preset = 'postponed';
+
 export type FilterState = {
     priorities: TypeToCheckedStatusMap<TodoPriority>;
+    presets: TypeToCheckedStatusMap<Preset>;
     projects: TypeToCheckedStatusMap;
     tags: TypeToCheckedStatusMap;
 };
@@ -16,6 +19,8 @@ export type TogglePriorityHandler = (priority: TodoPriority) => void;
 export type ToggleProjectHandler = (project: string) => void;
 
 export type ToggleTagHandler = (tag: string) => void;
+
+export type TogglePresetHandler = (preset: Preset) => void;
 
 export default function useHandleFilterState(todos: TodoCollection) {
     const [appliedFilters, setAppliedFilters] = useState<FilterState>(() => {
@@ -33,6 +38,9 @@ export default function useHandleFilterState(todos: TodoCollection) {
                 should: true,
                 could: true,
                 would: true,
+            },
+            presets: {
+                postponed: true,
             },
             projects: projectMap,
             tags: tagsMap,
@@ -84,5 +92,13 @@ export default function useHandleFilterState(todos: TodoCollection) {
         });
     };
 
-    return { appliedFilters, togglePriority, toggleProject, toggleTag };
+    const togglePreset: TogglePresetHandler = (preset) => {
+        setAppliedFilters((currentFilterState) => {
+            return produce<FilterState>(currentFilterState, (newFilterState) => {
+                newFilterState.presets[preset] = !newFilterState.presets[preset];
+            });
+        });
+    };
+
+    return { appliedFilters, togglePriority, toggleProject, toggleTag, togglePreset };
 }

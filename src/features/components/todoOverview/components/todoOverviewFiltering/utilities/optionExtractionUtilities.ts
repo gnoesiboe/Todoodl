@@ -1,7 +1,8 @@
 import { TodoCollection, TodoPriority } from '../../../../../../model/todo';
 import { FilterMap } from '../hooks/useHandleFilterOptions';
 import { sortObjectByKey } from '../../../../../../utility/objectUtilities';
-import { FilterState, TypeToCheckedStatusMap } from '../../../hooks/useHandleFilterState';
+import { FilterState, Preset, TypeToCheckedStatusMap } from '../../../hooks/useHandleFilterState';
+import { checkIsToday } from '../../../../../../utility/dateTimeUtilities';
 
 export function composePriorityFilterMap(todos: TodoCollection): FilterMap<TodoPriority> {
     const found: FilterMap = {
@@ -16,6 +17,20 @@ export function composePriorityFilterMap(todos: TodoCollection): FilterMap<TodoP
     });
 
     return found;
+}
+
+export function composePresetFilterMap(todos: TodoCollection): FilterMap<Preset> {
+    const map: FilterMap<Preset> = {
+        postponed: 0,
+    };
+
+    todos.forEach((todo) => {
+        if (todo.start === null || checkIsToday(todo.start)) {
+            map.postponed++;
+        }
+    });
+
+    return map;
 }
 
 export function composeProjectFilterMap(todos: TodoCollection): FilterMap {

@@ -18,7 +18,9 @@ import LoadingIndicator from '../../../primitives/loadingIndicator/LoadingIndica
 const TodoOverview: VFC = () => {
     const { todos, loading } = useTodos();
 
-    const { appliedFilters, togglePriority, toggleProject, toggleTag } = useHandleFilterState(todos || []);
+    const { appliedFilters, togglePriority, toggleProject, toggleTag, togglePreset } = useHandleFilterState(
+        todos || [],
+    );
 
     const todosPreparedForDisplay = sortGroupAndFilterTodos(todos || [], appliedFilters);
 
@@ -48,6 +50,7 @@ const TodoOverview: VFC = () => {
                                     togglePriority={togglePriority}
                                     toggleProject={toggleProject}
                                     toggleTag={toggleTag}
+                                    togglePreset={togglePreset}
                                     className="mb-10"
                                 />
                                 <PriorityList>

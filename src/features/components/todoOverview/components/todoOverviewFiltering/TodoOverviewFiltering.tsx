@@ -4,6 +4,7 @@ import useHandleFilterOptions from './hooks/useHandleFilterOptions';
 import PrioritiesChoiceList from './components/PrioritiesChoiceList';
 import {
     FilterState,
+    TogglePresetHandler,
     TogglePriorityHandler,
     ToggleProjectHandler,
     ToggleTagHandler,
@@ -15,6 +16,7 @@ import { X, Filter } from 'react-feather';
 import { determineAmountOfAppliedFilters } from './utilities/optionExtractionUtilities';
 import TagsChoiceList from './components/TagsChoiceList';
 import createClassName from 'classnames';
+import PresetChoiceList from './components/PresetChoiceList';
 
 type Props = {
     todos: TodoCollection;
@@ -22,6 +24,7 @@ type Props = {
     togglePriority: TogglePriorityHandler;
     toggleProject: ToggleProjectHandler;
     toggleTag: ToggleTagHandler;
+    togglePreset: TogglePresetHandler;
     className?: string;
 };
 
@@ -31,6 +34,7 @@ const TodoOverviewFiltering: VFC<Props> = ({
     togglePriority,
     toggleProject,
     toggleTag,
+    togglePreset,
     className: additionalClassName,
 }) => {
     const { visible, show, hide } = useToggleVisibility(false);
@@ -57,6 +61,11 @@ const TodoOverviewFiltering: VFC<Props> = ({
                             appliedFilters={appliedFilters.priorities}
                             filterMap={options.priorities}
                             togglePriority={togglePriority}
+                        />
+                        <PresetChoiceList
+                            appliedFilters={appliedFilters.presets}
+                            filterMap={options.presets}
+                            togglePreset={togglePreset}
                         />
                         <ProjectChoiceList
                             appliedFilters={appliedFilters.projects}
