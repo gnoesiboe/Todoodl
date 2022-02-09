@@ -20,7 +20,9 @@ const toOpenTodoListItemTransformer: Transformer = (value) => {
     // noinspection RegExpRedundantEscape
     return value.replace(
         /^\* \[ \](.*)$/,
-        '<label class="flex gap-2 items-center first:mt-4"><input type="checkbox" disabled />$1</label>',
+        `<label class="flex gap-2 items-center first:mt-4">
+            <input type="checkbox" disabled class="text-blue-300" />$1
+        </label>`,
     );
 };
 
@@ -28,7 +30,9 @@ const toDoneTodoListItemTransformer: Transformer = (value) => {
     // noinspection RegExpRedundantEscape
     return value.replace(
         /^\* \[x\](.*)$/i,
-        '<label class="flex gap-2 items-center line-through text-gray-400"><input type="checkbox" disabled="disabled" checked="checked" /> $1</label>',
+        `<label class="flex gap-2 items-center line-through text-gray-400">
+            <input type="checkbox" disabled="disabled" checked="checked" class="text-gray-300" /> $1
+        </label>`,
     );
 };
 
