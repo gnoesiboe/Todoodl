@@ -154,6 +154,15 @@ const UsageOverview: VFC = () => {
                                     used to filter out groups of todos,.
                                 </DefinitionList.Definition>
                             </DefinitionList.Row>
+                            <DefinitionList.Row>
+                                <DefinitionList.Term>
+                                    <Code>[label](url)</Code>
+                                </DefinitionList.Term>
+                                <DefinitionList.Definition>
+                                    When used in a todo description this will be transformed to a link, just like in
+                                    Markdown.
+                                </DefinitionList.Definition>
+                            </DefinitionList.Row>
                         </DefinitionList.Container>
                     </section>
                 </>
