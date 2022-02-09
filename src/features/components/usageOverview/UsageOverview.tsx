@@ -78,7 +78,7 @@ const UsageOverview: VFC = () => {
                         <DefinitionList.Container>
                             <DefinitionList.Row>
                                 <DefinitionList.Term>
-                                    <Code>d:[deadline]</Code>
+                                    <Code>dl:[deadline]</Code>
                                 </DefinitionList.Term>
                                 <DefinitionList.Definition>
                                     <p>Replace `[deadline]` with any of the values below to assign a deadline:</p>
@@ -107,7 +107,7 @@ const UsageOverview: VFC = () => {
                                 <DefinitionList.Definition>
                                     <p>
                                         <i>
-                                            (see <Code>d:[deadline]</Code> above)
+                                            (see <Code>dl:[deadline]</Code> above)
                                         </i>
                                     </p>
                                 </DefinitionList.Definition>
