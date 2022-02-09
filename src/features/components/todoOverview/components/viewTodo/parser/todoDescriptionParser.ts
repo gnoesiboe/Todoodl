@@ -13,7 +13,10 @@ const toTagTransformer: Transformer = (value) => {
 };
 
 const toProjectTransformer: Transformer = (value) => {
-    return value.replace(/^\[([a-z0-9]+)]/i, '<strong class="uppercase">[$1]</strong> → ');
+    return value.replace(
+        /^\[([a-z0-9]+)]/i,
+        '<strong class="uppercase">$1</strong>&nbsp;&nbsp;<span class="text-gray-400">|</span>&nbsp;',
+    );
 };
 
 const toOpenTodoListItemTransformer: Transformer = (value) => {
