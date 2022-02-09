@@ -36,6 +36,20 @@ const toDoneTodoListItemTransformer: Transformer = (value) => {
     );
 };
 
+const toLinkWithLabelTransformer: Transformer = (value) => {
+    return value.replace(
+        /\[([^\]]+)]\(([^\s]+)\)/gi,
+        '<a href="$2" target="_blank" rel="nofollow noreferrer" class="underline">$1</a>',
+    );
+};
+
+const toLinkWithoutLabelTransformer: Transformer = (value) => {
+    return value.replace(
+        /(?<!")(https:\/\/[^\s]+)/gi,
+        '<a href="$1" target="_blank" rel="nofollow noreferrer"  class="underline">$1</a>',
+    );
+};
+
 function compose(value: string, composers: Transformer[]): string {
     let newValue: string = value;
 
@@ -54,6 +68,8 @@ export function parseDescription(description: string): string[] {
         toStrongTransformer,
         toLineThroughTransformer,
         toTagTransformer,
+        toLinkWithLabelTransformer,
+        toLinkWithoutLabelTransformer, // Beware! Execute this one after toLinkWithLabelTransformer
     ]);
 
     const parsedOtherLines = otherLines
@@ -64,6 +80,8 @@ export function parseDescription(description: string): string[] {
                 toLineThroughTransformer,
                 toOpenTodoListItemTransformer,
                 toDoneTodoListItemTransformer,
+                toLinkWithLabelTransformer,
+                toLinkWithoutLabelTransformer, // Beware! Execute this one after toLinkWithLabelTransformer
             ]);
         });
 
