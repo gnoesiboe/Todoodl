@@ -34,7 +34,7 @@ const TodoOverview: VFC = () => {
         <section className="space-y-4 md:border-gray-300 md:border md:rounded-md pb-6">
             <div className="p-4 text-center bg-blue-400">
                 <Heading as="h1" variant="primary">
-                    @todo
+                    todo
                 </Heading>
             </div>
             <div className="p-4 space-y-8">
