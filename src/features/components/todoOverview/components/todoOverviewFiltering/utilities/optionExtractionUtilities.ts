@@ -23,6 +23,7 @@ export function composePresetFilterMap(todos: TodoCollection): FilterMap<Preset>
     const map: FilterMap<Preset> = {
         postponed: 0,
         waiting: 0,
+        done: 0,
     };
 
     todos.forEach((todo) => {
@@ -32,6 +33,10 @@ export function composePresetFilterMap(todos: TodoCollection): FilterMap<Preset>
 
         if (todo.tags.includes('waiting')) {
             map.waiting++;
+        }
+
+        if (!!todo.doneAt) {
+            map.done++;
         }
     });
 
