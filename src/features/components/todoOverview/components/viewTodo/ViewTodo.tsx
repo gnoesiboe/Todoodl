@@ -23,6 +23,7 @@ type Props = {
     current: boolean;
     onDescriptionClick: MouseEventHandler;
     todoIndexInFlatCollection: number;
+    isLast: boolean;
 };
 
 export enum Mode {
@@ -30,10 +31,10 @@ export enum Mode {
     Edit = 'edit',
 }
 
-const ViewTodo: VFC<Props> = ({ todo, current, onDescriptionClick, todoIndexInFlatCollection }) => {
+const ViewTodo: VFC<Props> = ({ todo, current, onDescriptionClick, todoIndexInFlatCollection, isLast }) => {
     const [mode, setMode] = useState<Mode>(Mode.View);
 
-    const { update } = useManageTodos();
+    const { update, move } = useManageTodos();
 
     const toggleDone = useCallback(() => {
         update(todo.uuid, {
@@ -114,7 +115,7 @@ const ViewTodo: VFC<Props> = ({ todo, current, onDescriptionClick, todoIndexInFl
                                     </ActionButton>
                                 </ActionListGroup>
                                 <ActionListSeparator />
-                                <ActionListGroup label="add new">
+                                <ActionListGroup label="new">
                                     <ActionButton onClick={onAddBeforeButtonClick} disabled={showAddLocation !== null}>
                                         before
                                     </ActionButton>
@@ -123,7 +124,23 @@ const ViewTodo: VFC<Props> = ({ todo, current, onDescriptionClick, todoIndexInFl
                                     </ActionButton>
                                 </ActionListGroup>
                                 <ActionListSeparator />
+                                <ActionListGroup label="move">
+                                    <ActionButton
+                                        onClick={() => move(todoIndexInFlatCollection, todoIndexInFlatCollection - 1)}
+                                        disabled={todoIndexInFlatCollection === 0}
+                                    >
+                                        up
+                                    </ActionButton>
+                                    <ActionButton
+                                        onClick={() => move(todoIndexInFlatCollection, todoIndexInFlatCollection + 1)}
+                                        disabled={isLast}
+                                    >
+                                        down
+                                    </ActionButton>
+                                </ActionListGroup>
+                                <ActionListSeparator />
                                 <ActionButton onClick={onEditClick}>edit</ActionButton>
+                                <ActionListSeparator />
                                 <ActionButton onClick={onDeleteClick}>delete</ActionButton>
                             </ActionList>
                         )}

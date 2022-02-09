@@ -58,18 +58,21 @@ const TodoOverview: VFC = () => {
                                         <PriorityGroup name={priority} key={priority}>
                                             {todosPreparedForDisplay[priority].length > 0 ? (
                                                 <TodoList>
-                                                    {todosPreparedForDisplay[priority].map((todo) => (
-                                                        <ViewTodo
-                                                            key={todo.uuid}
-                                                            todo={todo}
-                                                            current={todo.uuid === currentTodoUuid}
-                                                            onDescriptionClick={() => setCurrentTodoUuid(todo.uuid)}
-                                                            todoIndexInFlatCollection={resolveIndexInFlatCollection(
-                                                                todo,
-                                                                todos,
-                                                            )}
-                                                        />
-                                                    ))}
+                                                    {todosPreparedForDisplay[priority].map((todo) => {
+                                                        const flatIndex = resolveIndexInFlatCollection(todo, todos);
+                                                        const isLast = flatIndex === todos?.length - 1;
+
+                                                        return (
+                                                            <ViewTodo
+                                                                key={todo.uuid}
+                                                                todo={todo}
+                                                                current={todo.uuid === currentTodoUuid}
+                                                                onDescriptionClick={() => setCurrentTodoUuid(todo.uuid)}
+                                                                todoIndexInFlatCollection={flatIndex}
+                                                                isLast={isLast}
+                                                            />
+                                                        );
+                                                    })}
                                                 </TodoList>
                                             ) : (
                                                 <i>n.a.</i>
