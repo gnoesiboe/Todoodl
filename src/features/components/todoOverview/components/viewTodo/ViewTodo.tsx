@@ -85,19 +85,31 @@ const ViewTodo: VFC<Props> = ({ todo, current, onDescriptionClick, todoIndexInFl
                             />
                             {!todo.doneAt && <Period todo={todo} className="float-right flex-none" />}
                         </div>
-                        {current && !todo.doneAt && (
+                        {current && (
                             <ActionList level={1}>
                                 <ActionListGroup label="priority">
-                                    <ActionButton onClick={onMustClick} disabled={todo.priority === 'must'}>
+                                    <ActionButton
+                                        onClick={onMustClick}
+                                        disabled={todo.priority === 'must' || !!todo.doneAt}
+                                    >
                                         must
                                     </ActionButton>
-                                    <ActionButton onClick={onShouldClick} disabled={todo.priority === 'should'}>
+                                    <ActionButton
+                                        onClick={onShouldClick}
+                                        disabled={todo.priority === 'should' || !!todo.doneAt}
+                                    >
                                         should
                                     </ActionButton>
-                                    <ActionButton onClick={onCouldClick} disabled={todo.priority === 'could'}>
+                                    <ActionButton
+                                        onClick={onCouldClick}
+                                        disabled={todo.priority === 'could' || !!todo.doneAt}
+                                    >
                                         could
                                     </ActionButton>
-                                    <ActionButton onClick={onWouldClick} disabled={todo.priority === 'would'}>
+                                    <ActionButton
+                                        onClick={onWouldClick}
+                                        disabled={todo.priority === 'would' || !!todo.doneAt}
+                                    >
                                         would
                                     </ActionButton>
                                 </ActionListGroup>
