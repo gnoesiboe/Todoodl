@@ -80,7 +80,7 @@ const TodoOverviewFiltering: VFC<Props> = ({
                     </div>
                 </>
             ) : (
-                <Button variant="link" className="flex gap-2 items-center" deflated="x" onClick={show}>
+                <Button variant="link" className="flex gap-2 items-center block w-full" deflated="x" onClick={show}>
                     <Filter size={14} /> Filter {appliedFilterCount > 0 && `(${appliedFilterCount})`}
                 </Button>
             )}
