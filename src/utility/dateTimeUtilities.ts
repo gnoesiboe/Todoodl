@@ -14,11 +14,25 @@ import {
     nextFriday,
     nextSaturday,
     nextSunday,
+    isPast,
+    isFuture,
+    isYesterday,
+    isSameDay,
 } from 'date-fns';
 import nl from 'date-fns/locale/nl';
 
 export function checkIsToday(date: Date): boolean {
     return isToday(date);
+}
+
+export function checkIsTodayOrBefore(date: Date): boolean {
+    return isToday(date) || isPast(date);
+}
+
+export function checkIsFutureDay(date: Date): boolean {
+    const startOfDate = startOfDay(date);
+
+    return isFuture(startOfDate);
 }
 
 export function resolveDateForIndicator(indicator: string): Date | null {
@@ -86,12 +100,44 @@ function createStartOfDay(date: Date): Date {
 }
 
 export function formatRelativeDate(date: Date): string {
+    if (isYesterday(date)) {
+        return 'yesterday';
+    }
+
     if (isToday(date)) {
         return 'today';
     }
 
     if (isTomorrow(date)) {
         return 'tomorrow';
+    }
+
+    if (isSameDay(nextMonday(new Date()), date)) {
+        return 'monday';
+    }
+
+    if (isSameDay(nextTuesday(new Date()), date)) {
+        return 'tuesday';
+    }
+
+    if (isSameDay(nextWednesday(new Date()), date)) {
+        return 'wednesday';
+    }
+
+    if (isSameDay(nextThursday(new Date()), date)) {
+        return 'thursday';
+    }
+
+    if (isSameDay(nextFriday(new Date()), date)) {
+        return 'friday';
+    }
+
+    if (isSameDay(nextSaturday(new Date()), date)) {
+        return 'saturday';
+    }
+
+    if (isSameDay(nextSunday(new Date()), date)) {
+        return 'sunday';
     }
 
     const now = new Date();
@@ -112,7 +158,7 @@ export function parseISOString(value: string): Date {
 }
 
 export function isPressing(date: Date): boolean {
-    return isToday(date);
+    return checkIsTodayOrBefore(date);
 }
 
 export function isWarning(date: Date): boolean {
