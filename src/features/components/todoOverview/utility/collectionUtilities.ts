@@ -1,6 +1,6 @@
 import { allPriorities, GroupedTodoCollection, TodoCollection } from '../../../../model/todo';
 import { FilterState } from '../hooks/useHandleFilterState';
-import { checkIsToday } from '../../../../utility/dateTimeUtilities';
+import { checkIsFutureDay } from '../../../../utility/dateTimeUtilities';
 
 export function sortGroupAndFilterTodos(todos: TodoCollection, appliedFilters: FilterState): GroupedTodoCollection {
     let filteredTodos = [...todos];
@@ -37,7 +37,7 @@ export function sortGroupAndFilterTodos(todos: TodoCollection, appliedFilters: F
 
     if (!appliedFilters.presets.postponed) {
         filteredTodos = filteredTodos.filter((todo) => {
-            return !todo.start || checkIsToday(todo.start);
+            return !todo.start || !checkIsFutureDay(todo.start);
         });
     }
 
