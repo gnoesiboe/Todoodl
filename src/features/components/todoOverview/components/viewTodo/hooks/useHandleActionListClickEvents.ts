@@ -2,6 +2,7 @@ import { Dispatch, MouseEventHandler, SetStateAction } from 'react';
 import { Mode } from '../ViewTodo';
 import { Todo, TodoPriority } from '../../../../../../model/todo';
 import { useManageTodos } from '../../../../../../context/todo/TodoContext';
+import { createStartOfNextWeek, createStartOfTomorrow } from '../../../../../../utility/dateTimeUtilities';
 
 export default function useHandleActionListClickEvents(todo: Todo, setMode: Dispatch<SetStateAction<Mode>>) {
     const { remove, update } = useManageTodos();
@@ -28,5 +29,26 @@ export default function useHandleActionListClickEvents(todo: Todo, setMode: Disp
         }
     };
 
-    return { onEditClick, onMustClick, onShouldClick, onCouldClick, onWouldClick, onDeleteClick };
+    const onTomorrowClick: MouseEventHandler = () => {
+        update(todo.uuid, {
+            start: createStartOfTomorrow(),
+        });
+    };
+
+    const onNextWeekClick: MouseEventHandler = () => {
+        update(todo.uuid, {
+            start: createStartOfNextWeek(),
+        });
+    };
+
+    return {
+        onEditClick,
+        onMustClick,
+        onShouldClick,
+        onCouldClick,
+        onWouldClick,
+        onDeleteClick,
+        onTomorrowClick,
+        onNextWeekClick,
+    };
 }

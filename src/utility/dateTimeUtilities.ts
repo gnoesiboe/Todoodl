@@ -87,8 +87,12 @@ function parseDate(value: string): Date | null {
     });
 }
 
-function createStartOfTomorrow(): Date {
+export function createStartOfTomorrow(): Date {
     return startOfTomorrow();
+}
+
+export function createStartOfNextWeek(): Date {
+    return startOfDay(nextMonday(new Date()));
 }
 
 function createStartOfToday(): Date {

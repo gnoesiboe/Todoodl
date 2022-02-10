@@ -45,8 +45,16 @@ const ViewTodo: VFC<Props> = ({ todo, current, onDescriptionClick, todoIndexInFl
     useStartEditWithKeyboardShortcut(current, mode, setMode);
     useToggleToggleDoneWithKeyboardShortcut(current, mode, toggleDone);
 
-    const { onEditClick, onMustClick, onShouldClick, onCouldClick, onWouldClick, onDeleteClick } =
-        useHandleActionListClickEvents(todo, setMode);
+    const {
+        onEditClick,
+        onMustClick,
+        onShouldClick,
+        onCouldClick,
+        onWouldClick,
+        onDeleteClick,
+        onTomorrowClick,
+        onNextWeekClick,
+    } = useHandleActionListClickEvents(todo, setMode);
 
     const className = createClassName('p-2', 'rounded-sm', {
         'bg-blue-100': current,
@@ -142,6 +150,15 @@ const ViewTodo: VFC<Props> = ({ todo, current, onDescriptionClick, todoIndexInFl
                                 <ActionButton onClick={onEditClick}>edit</ActionButton>
                                 <ActionListSeparator />
                                 <ActionButton onClick={onDeleteClick}>delete</ActionButton>
+                                <ActionListSeparator />
+                                <ActionListGroup label="postpone">
+                                    <ActionButton onClick={onTomorrowClick} disabled={!!todo.doneAt}>
+                                        tomorrow
+                                    </ActionButton>
+                                    <ActionButton onClick={onNextWeekClick} disabled={!!todo.doneAt}>
+                                        next week
+                                    </ActionButton>
+                                </ActionListGroup>
                             </ActionList>
                         )}
                     </div>
