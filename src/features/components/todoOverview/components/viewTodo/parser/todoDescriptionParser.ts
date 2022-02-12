@@ -15,7 +15,7 @@ const toTagTransformer: Transformer = (value) => {
 const toProjectTransformer: Transformer = (value) => {
     return value.replace(
         /^\[([a-z0-9]+)]/i,
-        '<span class="lowercase">$1</span>&nbsp;&nbsp;<span class="text-gray-400">—</span>&nbsp;',
+        '<strong class="lowercase">$1</strong>&nbsp;&nbsp;<span class="text-gray-400"> | </span>&nbsp;',
     );
 };
 
