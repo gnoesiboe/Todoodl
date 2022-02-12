@@ -40,8 +40,8 @@ export default function useHandleFilterState(todos: TodoCollection) {
                 would: true,
             },
             presets: {
-                postponed: true,
-                done: true,
+                postponed: false,
+                done: false,
             },
             projects: projectMap,
             tags: tagsMap,
