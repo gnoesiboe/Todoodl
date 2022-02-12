@@ -21,7 +21,7 @@ import ActionListGroup from './components/ActionListGroup';
 type Props = {
     todo: Todo;
     current: boolean;
-    onDescriptionClick: MouseEventHandler;
+    onDescriptionClick: () => void;
     todoIndexInFlatCollection: number;
     isLast: boolean;
 };
@@ -88,7 +88,13 @@ const ViewTodo: VFC<Props> = ({ todo, current, onDescriptionClick, todoIndexInFl
                             <Description
                                 todo={todo}
                                 onDoubleClick={() => setMode(Mode.Edit)}
-                                onClick={onDescriptionClick}
+                                onClick={(event) => {
+                                    // Attempt to fix problem where unexpected actions are executed when you move through the todos
+                                    event.preventDefault();
+                                    event.stopPropagation();
+
+                                    onDescriptionClick();
+                                }}
                                 current={current}
                                 className="w-full"
                             />
