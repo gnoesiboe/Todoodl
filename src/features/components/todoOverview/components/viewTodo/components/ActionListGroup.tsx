@@ -9,19 +9,23 @@ type Props = {
 };
 
 const ActionListGroup: VFC<Props> = ({ children, label }) => {
-    const { visible, show, hide } = useToggleVisibility(false);
+    const { visible, toggle } = useToggleVisibility(false);
 
-    if (visible) {
-        return (
-            <ActionList level={2} onClick={hide}>
-                {Children.map(children, (child) => (
-                    <Fragment key={child.key}>{child}</Fragment>
-                ))}
-            </ActionList>
-        );
-    }
-
-    return <ActionButton onClick={show}>{label}</ActionButton>;
+    return (
+        <>
+            <ActionButton onClick={toggle}>{label}</ActionButton>
+            {visible && (
+                <>
+                    {visible ? ' → ' : ''}
+                    <ActionList level={2} onClick={toggle}>
+                        {Children.map(children, (child) => (
+                            <Fragment key={child.key}>{child}</Fragment>
+                        ))}
+                    </ActionList>
+                </>
+            )}
+        </>
+    );
 };
 
 export default ActionListGroup;

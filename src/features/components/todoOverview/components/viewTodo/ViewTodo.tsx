@@ -129,6 +129,15 @@ const ViewTodo: VFC<Props> = ({ todo, current, onDescriptionClick, todoIndexInFl
                                     </ActionButton>
                                 </ActionListGroup>
                                 <ActionListSeparator />
+                                <ActionListGroup label="postpone">
+                                    <ActionButton onClick={onTomorrowClick} disabled={!!todo.doneAt}>
+                                        tomorrow
+                                    </ActionButton>
+                                    <ActionButton onClick={onNextWeekClick} disabled={!!todo.doneAt}>
+                                        next week
+                                    </ActionButton>
+                                </ActionListGroup>
+                                <ActionListSeparator />
                                 <ActionListGroup label="new">
                                     <ActionButton onClick={onAddBeforeButtonClick} disabled={showAddLocation !== null}>
                                         before
@@ -156,15 +165,6 @@ const ViewTodo: VFC<Props> = ({ todo, current, onDescriptionClick, todoIndexInFl
                                 <ActionButton onClick={onEditClick}>edit</ActionButton>
                                 <ActionListSeparator />
                                 <ActionButton onClick={onDeleteClick}>delete</ActionButton>
-                                <ActionListSeparator />
-                                <ActionListGroup label="postpone">
-                                    <ActionButton onClick={onTomorrowClick} disabled={!!todo.doneAt}>
-                                        tomorrow
-                                    </ActionButton>
-                                    <ActionButton onClick={onNextWeekClick} disabled={!!todo.doneAt}>
-                                        next week
-                                    </ActionButton>
-                                </ActionListGroup>
                             </ActionList>
                         )}
                     </div>
