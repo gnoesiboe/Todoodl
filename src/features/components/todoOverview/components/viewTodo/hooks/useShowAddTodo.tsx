@@ -15,6 +15,8 @@ export default function useShowAddTodo() {
                     return;
                 }
 
+                console.debug('on a button click');
+
                 setLocation('after');
 
                 // prevent typing the 'a' in autofocused textarea
@@ -28,6 +30,8 @@ export default function useShowAddTodo() {
                 if (event.target && checkIsFormInputElement(event.target)) {
                     return;
                 }
+
+                console.debug('on b button click');
 
                 setLocation('before');
 
@@ -44,10 +48,14 @@ export default function useShowAddTodo() {
     }, [location, setLocation]);
 
     const onAddAfterButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
+        console.debug('on add after button click');
+
         setLocation('after');
     };
 
     const onAddBeforeButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
+        console.debug('on add before button click');
+
         setLocation('before');
     };
 
