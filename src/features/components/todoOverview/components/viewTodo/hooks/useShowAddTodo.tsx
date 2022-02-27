@@ -4,18 +4,20 @@ import { checkIsFormInputElement } from '../../../../../../utility/formUtilities
 
 type LocationType = 'before' | 'after' | null;
 
-export default function useShowAddTodo() {
+export default function useShowAddTodo(current: boolean) {
     const [location, setLocation] = useState<LocationType>(null);
 
     useEffect(() => {
+        if (!current) {
+            setLocation(null);
+        }
+
         const onKeyDown = (event: WindowEventMap['keydown']) => {
             if (checkIsKeyboardShortcut(event, 'a')) {
                 // typing in a form input should be excluded as otherwise strange stuff starts to happen
                 if (event.target && checkIsFormInputElement(event.target)) {
                     return;
                 }
-
-                console.debug('on a button click');
 
                 setLocation('after');
 
@@ -31,8 +33,6 @@ export default function useShowAddTodo() {
                     return;
                 }
 
-                console.debug('on b button click');
-
                 setLocation('before');
 
                 // prevent typing the 'a' in autofocused textarea
@@ -45,17 +45,13 @@ export default function useShowAddTodo() {
         window.addEventListener('keydown', onKeyDown);
 
         return () => window.removeEventListener('keydown', onKeyDown);
-    }, [location, setLocation]);
+    }, [location, setLocation, current]);
 
     const onAddAfterButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
-        console.debug('on add after button click');
-
         setLocation('after');
     };
 
     const onAddBeforeButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
-        console.debug('on add before button click');
-
         setLocation('before');
     };
 

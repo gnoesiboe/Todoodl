@@ -67,14 +67,14 @@ const ViewTodo: VFC<Props> = ({ todo, current, onDescriptionClick, todoIndexInFl
         hide: hideAdd,
         onAddBeforeButtonClick,
         onAddAfterButtonClick,
-    } = useShowAddTodo();
+    } = useShowAddTodo(current);
 
     return (
         <div ref={ref}>
             {mode === Mode.Edit && <EditTodo todo={todo} onDone={() => setMode(Mode.View)} />}
             {mode === Mode.View && (
                 <>
-                    {current && showAddLocation === 'before' && (
+                    {showAddLocation === 'before' && (
                         <AddTodo
                             priority={todo.priority}
                             atIndex={todoIndexInFlatCollection}
@@ -168,7 +168,7 @@ const ViewTodo: VFC<Props> = ({ todo, current, onDescriptionClick, todoIndexInFl
                             </ActionList>
                         )}
                     </div>
-                    {current && showAddLocation === 'after' && (
+                    {showAddLocation === 'after' && (
                         <AddTodo
                             priority={todo.priority}
                             atIndex={todoIndexInFlatCollection + 1}
