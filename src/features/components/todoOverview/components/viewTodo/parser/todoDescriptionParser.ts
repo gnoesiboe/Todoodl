@@ -53,6 +53,13 @@ const toLinkWithoutLabelTransformer: Transformer = (value) => {
     );
 };
 
+const toCodeTransformer: Transformer = (value) => {
+    return value.replace(
+        /`([^`]+)`/g,
+        '<code class="inline italic font-mono bg-gray-600 text-white opacity-60 px-1 rounded text-xm">$1</code>',
+    );
+};
+
 function compose(value: string, composers: Transformer[]): string {
     let newValue: string = value;
 
@@ -71,6 +78,7 @@ export function parseDescription(description: string): string[] {
         toStrongTransformer,
         toLineThroughTransformer,
         toTagTransformer,
+        toCodeTransformer,
         toLinkWithLabelTransformer,
         toLinkWithoutLabelTransformer, // Beware! Execute this one after toLinkWithLabelTransformer
     ]);
@@ -83,6 +91,7 @@ export function parseDescription(description: string): string[] {
                 toLineThroughTransformer,
                 toOpenTodoListItemTransformer,
                 toDoneTodoListItemTransformer,
+                toCodeTransformer,
                 toLinkWithLabelTransformer,
                 toLinkWithoutLabelTransformer, // Beware! Execute this one after toLinkWithLabelTransformer
             ]);
