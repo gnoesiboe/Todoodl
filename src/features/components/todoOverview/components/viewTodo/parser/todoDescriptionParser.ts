@@ -23,7 +23,7 @@ const toOpenTodoListItemTransformer: Transformer = (value) => {
     // noinspection RegExpRedundantEscape
     return value.replace(
         /^\* \[ \](.*)$/,
-        `<label class="flex gap-2 items-center first:mt-4">
+        `<label class="flex gap-2 items-center my-2">
             <input type="checkbox" disabled class="text-blue-300" />$1
         </label>`,
     );
@@ -37,6 +37,15 @@ const toDoneTodoListItemTransformer: Transformer = (value) => {
             <input type="checkbox" disabled="disabled" checked="checked" class="text-gray-300" /> $1
         </label>`,
     );
+};
+
+const toListItemTransformer: Transformer = (value) => {
+    // @todo find better solution that does not start a new list for each item
+    return value.replace(/^\* (.*$)/i, `<ul class="list-item pl-5"><li class="list-disc">$1</li></ul>`);
+};
+
+const toHeadingTransformer: Transformer = (value) => {
+    return value.replace(/^# (.*)$/, '<h3 class="font-bold uppercase">$1</h3>');
 };
 
 const toLinkWithLabelTransformer: Transformer = (value) => {
@@ -83,19 +92,19 @@ export function parseDescription(description: string): string[] {
         toLinkWithoutLabelTransformer, // Beware! Execute this one after toLinkWithLabelTransformer
     ]);
 
-    const parsedOtherLines = otherLines
-        .filter((otherLine) => !!otherLine.trim())
-        .map((otherLine) => {
-            return compose(otherLine, [
-                toStrongTransformer,
-                toLineThroughTransformer,
-                toOpenTodoListItemTransformer,
-                toDoneTodoListItemTransformer,
-                toCodeTransformer,
-                toLinkWithLabelTransformer,
-                toLinkWithoutLabelTransformer, // Beware! Execute this one after toLinkWithLabelTransformer
-            ]);
-        });
+    const parsedOtherLines = otherLines.map((otherLine) => {
+        return compose(otherLine.trim(), [
+            toStrongTransformer,
+            toLineThroughTransformer,
+            toHeadingTransformer,
+            toOpenTodoListItemTransformer,
+            toDoneTodoListItemTransformer,
+            toListItemTransformer, // Beware! Execute this one after the todo list items transformers
+            toCodeTransformer,
+            toLinkWithLabelTransformer,
+            toLinkWithoutLabelTransformer, // Beware! Execute this one after toLinkWithLabelTransformer
+        ]);
+    });
 
     return [parsedSummary, ...parsedOtherLines];
 }
