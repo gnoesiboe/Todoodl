@@ -48,7 +48,7 @@ const AddTodo: VFC<Props> = ({ atIndex, priority, className, onDone = () => {} }
         <form className={className || ''} onSubmit={onSubmit}>
             <TextareaAutosize
                 autoFocus
-                className="p-2 w-full"
+                className="p-3 w-full font-mono text-sm"
                 value={rawValue}
                 onChange={(event) => setRawValue(event.target.value)}
                 placeholder="[home] Do the dishes #quickfix @should s:today d:today"
