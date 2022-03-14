@@ -6,7 +6,7 @@ type Props = {
 
 const Note: VFC<Props> = ({ html }) => (
     <p
-        className="block text-gray-600 text-sm mb-4"
+        className="block text-gray-600 text-sm"
         dangerouslySetInnerHTML={{
             __html: html,
         }}

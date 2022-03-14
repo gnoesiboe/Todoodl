@@ -16,13 +16,13 @@ type Props = {
 const Description: VFC<Props> = ({ todo, className: additionalClassName, onDoubleClick, onClick, current }) => {
     const [parsedSummary, ...parsedOtherLines] = useMemo(() => parseDescription(todo.description), [todo.description]);
 
-    const className = createClassName('block space-y-2', additionalClassName);
+    const className = createClassName('block', additionalClassName);
 
     return (
         <div className={className} onClick={onClick}>
             <Summary todo={todo} html={parsedSummary} onDoubleClick={onDoubleClick} />
             {current && parsedOtherLines.length > 0 && (
-                <div>
+                <div className="mt-2 mb-4">
                     {parsedOtherLines.map((parsedOtherLine, index) => (
                         <Note key={index} html={parsedOtherLine} />
                     ))}
